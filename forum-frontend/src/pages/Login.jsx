@@ -9,7 +9,7 @@ function Login({ onLogin }) {
 
     try {
       const response = await fetch(
-        "http://localhost:3003/api/auth/login",
+        "https://forum-project-batu.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: {

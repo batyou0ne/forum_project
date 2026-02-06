@@ -13,7 +13,7 @@ function createPost() {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch("http://localhost:3003/api/posts",{
+            const response = await fetch("https://forum-project-batu.onrender.com/api/posts",{
                 method : "POST",
                 headers : {
                     "Content-Type": "application/json",

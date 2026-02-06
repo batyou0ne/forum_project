@@ -7,7 +7,7 @@ function PostList() {
     useEffect(() => {
         const token = localStorage.getItem("token");
 
-        fetch("http://localhost:3003/api/posts", {
+        fetch("https://forum-project-batu.onrender.com/api/posts", {
             headers: {
                 Authorization: `Bearer ${token}`
             },

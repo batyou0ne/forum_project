@@ -41,7 +41,7 @@ function PostDetail() {
                 const token = localStorage.getItem("token");
 
                 const response = await fetch(
-                    `http://localhost:3003/api/posts/${id}`,
+                    `https://forum-project-batu.onrender.com/api/posts/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ function PostDetail() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:3003/api/posts/${id}`,{
+            const response = await fetch(`https://forum-project-batu.onrender.com/api/posts/${id}`,{
                 method : "DELETE",
                 headers : {
                     Authorization : `Bearer ${token}`

@@ -15,7 +15,7 @@ function Posts() {
 
                 const token = localStorage.getItem("token");
 
-                const response = await fetch(`http://localhost:3003/api/posts?page=${page}&limit=5`, {
+                const response = await fetch(`https://forum-project-batu.onrender.com/api/posts?page=${page}&limit=5`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
