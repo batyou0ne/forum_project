@@ -1,0 +1,162 @@
+/* 1. GENEL AYARLAR */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+  /* Arka planı çok uçuk bir gök mavisi yaptık */
+  background-color: #f0f8ff; 
+  color: #2c3e50; /* Yazılar simsiyah değil, koyu lacivert tonunda */
+  line-height: 1.6;
+}
+
+/* Kapsayıcı */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 2. MENÜ (NAVBAR) */
+nav {
+  background: white; /* Menü bembeyaz bulut gibi olsun */
+  padding: 15px 30px;
+  /* Altına hafif mavi bir gölge */
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.15); 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  border-radius: 12px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #5d6d7e; /* Linkler gri-mavi */
+  font-weight: 600;
+  margin-right: 25px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: #00bfff; /* Üzerine gelince canlı gök mavisi */
+  transform: translateY(-2px); /* Hafif zıplama efekti */
+}
+
+/* 3. FORM TASARIMI */
+form {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  /* Formun gölgesi daha belirgin mavi */
+  box-shadow: 0 10px 25px rgba(135, 206, 250, 0.2); 
+  border: 1px solid #e1f5fe;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #34495e;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #eef2f3;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  font-size: 16px;
+  background-color: #fdfefe;
+  transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #00bfff; /* Tıklayınca gök mavisi sınır */
+  background-color: #fff;
+}
+
+/* 4. BUTONLAR */
+button {
+  /* Gök mavisi degrade (geçişli) renk */
+  background: linear-gradient(135deg, #00bfff 0%, #0099ff 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 191, 255, 0.3);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 191, 255, 0.5);
+}
+
+/* Silme butonu (Soft Kırmızı) */
+button.delete-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+}
+
+button.delete-btn:hover {
+  box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5);
+}
+
+button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 5. POST KARTLARI */
+.post-card {
+  background: white;
+  border: none; /* Kenarlık yok, sadece gölge */
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  /* Hafif mavi gölge */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); 
+  border-left: 5px solid #00bfff; /* Sol tarafta mavi şerit */
+  transition: transform 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(135, 206, 250, 0.25);
+}
+
+.post-card h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.post-card a {
+  text-decoration: none;
+  color: #2e86de;
+  transition: color 0.2s;
+}
+
+.post-card a:hover {
+  color: #00bfff;
+}
+
+.post-card p {
+  color: #7f8c8d;
+}
+
+.post-card small {
+  display: block;
+  margin-top: 15px;
+  color: #95a5a6;
+  font-size: 0.85rem;
+}
