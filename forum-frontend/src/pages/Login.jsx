@@ -54,6 +54,9 @@ function Login({ onLogin }) {
       />
 
       <button type="submit">Login</button>
+      <p style={{ marginTop: "15px", textAlign: "center" }}>
+        Hesabın yok mu? <Link to="/register">Hemen Kayıt Ol</Link>
+      </p>
     </form>
   );
 }

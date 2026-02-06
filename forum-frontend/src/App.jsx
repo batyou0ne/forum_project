@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,6 +39,8 @@ function App() {
             isLoggedIn ? <Posts /> : <Login onLogin={() => setIsLoggedIn(true)} />
           }
         />
+
+        <Route path="/register" element={<Register />} />
 
         <Route 
           path="/create" 
