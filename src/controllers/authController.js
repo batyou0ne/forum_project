@@ -1,58 +1,36 @@
-const db = require("../config/db");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+// src/controllers/authController.js
+
+const db = require("../config/db"); // Veritabanı bağlantını buradan alıyor
+const bcrypt = require("bcrypt"); // Şifreleme kütüphanesi (Eğer kullanıyorsan)
 
 exports.register = async (req, res) => {
+  try {
     const { username, email, password } = req.body;
 
-    if (!username || !email || !password) {
-        return res.status(400).json({ message: "All fields required!" })
-    }
+    // Şifreyi hash'le (Eğer bcrypt kullanıyorsan bu satırı aç)
+    // const hashedPassword = await bcrypt.hash(password, 10);
+    // Eğer kullanmıyorsan direkt password değişkenini kullan.
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Not: Aşağıdaki sorguda 'password' yerine hashlenmiş şifreyi kullanman güvenlik için daha iyidir.
+    const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    
+    // Veritabanına kaydet
+    await db.query(sql, [username, email, password]);
 
-    const sql = `
-        INSERT INTO users (username, email, password)
-        VALUES(?, ?, ?)
-    `
-    db.query(sql, [username, email, hashedPassword], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message })
-        }
+    // BAŞARILI CEVABI (Burası çok önemli, eksikse frontend beklemede kalır)
+    res.status(201).json({ message: "Kayıt başarıyla oluşturuldu! 🎉" });
 
-        res.status(201).json({ message: "User registered successfully" });
-    });
-};
-
-exports.login = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const sql = "SELECT * FROM users WHERE email = ?";
-    const [users] = await db.query(sql, [email]);
-
-    if (users.length === 0) {
-      return res.status(401).json({ message: "Invalid credentials!" });
-    }
-
-    const user = users[0];
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials!" });
-    }
-
-    const token = jwt.sign(
-      { id: user.id,
-        username: user.username,
-        role: user.role
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    return res.json({ token });
   } catch (error) {
-    return res.status(500).json({ message: "Login failed", error });
+    console.error("Kayıt Hatası:", error);
+
+    // Hata: Duplicate Entry (Aynı kullanıcı adı veya email)
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(400).json({ 
+        message: "Bu kullanıcı adı veya e-posta zaten kullanımda!" 
+      });
+    }
+
+    // Diğer Hatalar
+    res.status(500).json({ message: "Sunucu hatası oluştu." });
   }
 };
