@@ -29,3 +29,36 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: "Sunucu hatası oluştu." });
   }
 };
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const sql = "SELECT * FROM users WHERE email = ?";
+    const [users] = await db.query(sql, [email]);
+
+    if (users.length === 0) {
+      return res.status(401).json({ message: "Invalid credentials!" });
+    }
+
+    const user = users[0];
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials!" });
+    }
+
+    const token = jwt.sign(
+      { id: user.id,
+        username: user.username,
+        role: user.role
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    return res.json({ token });
+  } catch (error) {
+    return res.status(500).json({ message: "Login failed", error });
+  }
+};
