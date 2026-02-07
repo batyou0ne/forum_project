@@ -37,7 +37,7 @@ function createPost() {
     }
     return (
         <div>
-            <h2>Yeni Yazı Oluştur</h2>
+            <h2>Yeni Gönderi Oluştur</h2>
             
             {/* Form gönderilince handleSubmit çalışsın */}
             <form onSubmit={handleSubmit}>
