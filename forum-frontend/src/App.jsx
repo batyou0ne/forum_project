@@ -6,7 +6,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import Aurora from "./components/Aurora";
 
