@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
+import SplitText from "./SplitText";
 
 import Aurora from "./components/Aurora";
 
@@ -25,31 +26,30 @@ function App() {
 
   return (
     <>
-      {/* 1. KESİN ÇÖZÜM AURORA ARKA PLANI */}
-      <div style={{ 
-        position: "fixed", 
-        top: 0, 
-        left: 0, 
-        width: "100vw", 
-        height: "100vh", 
-        zIndex: -1, 
-        pointerEvents: "none" 
+      <div style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        zIndex: -1,
+        pointerEvents: "none"
       }}>
         <Aurora
-          colorStops={["#446bf2", "#0f1117", "#22c55e"]} 
+          colorStops={["#446bf2", "#0f1117", "#22c55e"]}
           amplitude={1.2}
           blend={0.5}
           speed={0.5}
         />
       </div>
 
-      {/* 2. SİTENİN ANA İÇERİĞİ (Aurora'nın önünde duracak) */}
+
       <div className="container" style={{ position: "relative", zIndex: 10 }}>
         {isLoggedIn && (
           <nav>
             <div>
               <Link to="/">Anasayfa</Link>
-              <Link to="/create">Yeni Yazı Yaz</Link>
+              <Link to="/create">Yeni Gönderi Paylaş</Link>
             </div>
             <button onClick={handleLogout}>Çıkış Yap</button>
           </nav>
@@ -65,5 +65,25 @@ function App() {
     </>
   );
 }
+
+const handleAnimationComplete = () => {
+  console.log('All letters have animated!');
+};
+
+<SplitText
+  text="Hello, you!"
+  className="text-2xl font-semibold text-center"
+  delay={50}
+  duration={1.25}
+  ease="power3.out"
+  splitType="chars"
+  from={{ opacity: 0, y: 40 }}
+  to={{ opacity: 1, y: 0 }}
+  threshold={0.1}
+  rootMargin="-100px"
+  textAlign="center"
+  onLetterAnimationComplete={handleAnimationComplete}
+  showCallback
+/>
 
 export default App;
