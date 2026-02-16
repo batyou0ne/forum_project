@@ -42,6 +42,13 @@ function Login({ onLogin }) {
   return (
     <div className="auth-page">
       <form onSubmit={handleSubmit}>
+        <CircularText
+          text="WELCOME TO -DAILY CHATS- "
+          onHover="speedUp"
+          spinDuration={20}
+          className="custom-class"
+        />
+
         <SplitText
           text="Login"
           tag="h2"
@@ -52,15 +59,6 @@ function Login({ onLogin }) {
           splitType="chars,words"
           from={{ opacity: 0, y: 30 }}
           to={{ opacity: 1, y: 0 }}
-        />
-
-
-
-        <CircularText
-          text="WELCOME TO -DAILY CHATS- "
-          onHover="speedUp"
-          spinDuration={20}
-          className="custom-class"
         />
 
         <input
