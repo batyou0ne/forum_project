@@ -87,19 +87,27 @@ nav a:hover {
 
 nav button {
   margin-left: 0;
-  /* Flex justify-between handles positioning now */
-  background: rgba(255, 255, 255, 0.1);
-  /* Subtle ghost button */
+  background: transparent;
+  /* Match link background */
   border: none;
   color: var(--text-muted);
-  padding: 0.52rem 0.95rem;
-  font-size: 0.85rem;
+  font-weight: 600;
+  /* Match link font weight */
+  padding: 0.45rem 0.7rem;
+  /* Match link padding */
+  font-size: 1rem;
+  /* Match link font size (inherited usually, but standardizing) */
+  font-family: inherit;
+  /* Ensure font matches */
+  cursor: pointer;
 }
 
 nav button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border-color: var(--text-muted);
+  color: #eef2ff;
+  background: rgba(99, 102, 241, 0.15);
+  /* Match link hover */
+  transform: none;
+  /* Reset global button transform if needed, or keep for effect */
 }
 
 
