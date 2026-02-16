@@ -5,8 +5,7 @@ import Register from "./pages/Register";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
-import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import { useRef } from 'react';
+
 
 import Aurora from "./components/Aurora";
 
