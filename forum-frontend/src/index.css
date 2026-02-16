@@ -87,7 +87,7 @@ button:focus-visible {
   width: 100vw;
   height: 100vh;
   z-index: -1; 
-  opacity: 0.3; /* Gözükmesi için biraz daha belirginleştirdim */
+  opacity: 0; /* Gözükmesi için biraz daha belirginleştirdim */
 }
 
 /* 4. DÜZELTME: Yazıların ve formların üstte tıklanabilir kalması için */
