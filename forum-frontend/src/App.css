@@ -167,3 +167,21 @@ hr {
   border-top: 1px solid var(--border-color);
   margin: 1.1rem 0;
 }
+
+/* Auth Page Specific Styles */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Adjust as needed to center vertically within the available space */
+  width: 100%;
+}
+
+.auth-page form {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 100%;
+  max-width: 400px; /* Ensure it doesn't get too wide */
+  padding: 0; /* Remove padding if not needed, or adjust */
+}

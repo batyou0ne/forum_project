@@ -5,26 +5,26 @@ function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate= useNavigate();
+    const navigate = useNavigate();
 
-    const handleRegister = async (e) =>{
+    const handleRegister = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await fetch("https://forum-project-batu.onrender.com/api/auth/register",{
-                method : "POST",
-                headers : {
-                    "Content-Type" : "application/json"
+            const response = await fetch("https://forum-project-batu.onrender.com/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                body : JSON.stringify({username, email, password}),
+                body: JSON.stringify({ username, email, password }),
             });
 
             const data = await response.json();
 
-            if(response.ok){
+            if (response.ok) {
                 alert("Kayıt başarılı!")
                 navigate("/");
-            }else{
+            } else {
                 alert(data.message || "Kayıt başarısız!")
             }
 
@@ -35,10 +35,10 @@ function Register() {
     };
 
     return (
-        <div style={{ maxWidth: "400px", margin: "50px auto", textAlign: "center" }}>
+        <div className="auth-page">
             <form onSubmit={handleRegister}>
                 <h2>Aramıza Katıl ☁️</h2>
-                
+
                 <div style={{ marginBottom: "15px" }}>
                     <label>Kullanıcı Adı</label>
                     <input

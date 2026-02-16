@@ -37,28 +37,30 @@ function Login({ onLogin }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+    <div className="auth-page">
+      <form onSubmit={handleSubmit}>
+        <h2>Login</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button type="submit">Login</button>
-      <p style={{ marginTop: "15px", textAlign: "center" }}>
-        Hesabın yok mu? <Link to="/register">Hemen Kayıt Ol</Link>
-      </p>
-    </form>
+        <button type="submit">Login</button>
+        <p style={{ marginTop: "15px", textAlign: "center" }}>
+          Hesabın yok mu? <Link to="/register">Hemen Kayıt Ol</Link>
+        </p>
+      </form>
+    </div>
   );
 }
 
