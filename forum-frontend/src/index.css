@@ -66,3 +66,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* AURORA ARKA PLAN AYARLARI */
+.app-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Her şeyin arkasına gönderir */
+  opacity: 0.6; /* Göz yormaması için hafif şeffaf yaptık */
+}
