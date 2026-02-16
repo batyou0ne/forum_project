@@ -90,7 +90,7 @@ nav button {
   /* Flex justify-between handles positioning now */
   background: rgba(255, 255, 255, 0.1);
   /* Subtle ghost button */
-  border: 1px solid var(--border-color);
+  border: none;
   color: var(--text-muted);
   padding: 0.52rem 0.95rem;
   font-size: 0.85rem;
@@ -102,9 +102,7 @@ nav button:hover {
   border-color: var(--text-muted);
 }
 
-nav button:hover {
-  background: var(--danger-hover);
-}
+
 
 h2 {
   margin: 0 0 1rem;
