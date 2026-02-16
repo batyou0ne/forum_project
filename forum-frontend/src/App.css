@@ -40,26 +40,36 @@ a:hover {
 
 .container {
   width: min(920px, 100% - 2rem);
-  margin: 2rem auto;
+  margin: 0 auto 2rem;
+  /* Removed top margin, handled by padding-top now */
+  padding-top: 100px;
+  /* Space for the fixed navbar */
 }
 
 nav {
+  position: fixed;
+  /* Fix to viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Push items to edges */
   gap: 0.75rem;
-  padding: 0.9rem 0 !important;
-  /* Remove horizontal padding since it's transparent */
-  margin-bottom: 2rem !important;
-  /* Increase spacing */
+
+  padding: 1.5rem 2rem !important;
+  /* Horizontal padding from edges */
+  margin: 0 !important;
+
   background: transparent !important;
-  /* Remove background */
   border: none;
-  /* Remove border */
   border-radius: 0;
   box-shadow: none;
-  /* Remove shadow */
+
+  /* Make sure interaction is possible */
+  pointer-events: auto;
 }
 
 nav a {

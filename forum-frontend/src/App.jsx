@@ -45,17 +45,17 @@ function App() {
       </div>
 
 
-      <div className="container" style={{ position: "relative", zIndex: 10 }}>
-        {isLoggedIn && (
-          <nav>
-            <div>
-              <Link to="/">Anasayfa</Link>
-              <Link to="/create">Yeni Gönderi Paylaş</Link>
-            </div>
-            <button onClick={handleLogout}>Çıkış Yap</button>
-          </nav>
-        )}
+      {isLoggedIn && (
+        <nav>
+          <div>
+            <Link to="/">Anasayfa</Link>
+            <Link to="/create">Yeni Gönderi Paylaş</Link>
+          </div>
+          <button onClick={handleLogout}>Çıkış Yap</button>
+        </nav>
+      )}
 
+      <div className="container" style={{ position: "relative", zIndex: 10 }}>
         <Routes>
           <Route path="/" element={isLoggedIn ? <Posts /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
           <Route path="/register" element={<Register />} />
