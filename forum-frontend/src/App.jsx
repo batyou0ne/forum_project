@@ -5,7 +5,8 @@ import Register from "./pages/Register";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
-import SplitText from "./SplitText";
+
+import SplitText from "./components/SplitText";
 
 import Aurora from "./components/Aurora";
 
