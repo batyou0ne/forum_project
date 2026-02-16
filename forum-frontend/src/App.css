@@ -173,7 +173,8 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh; /* Adjust as needed to center vertically within the available space */
+  min-height: 80vh;
+  /* Adjust as needed to center vertically within the available space */
   width: 100%;
 }
 
@@ -182,6 +183,33 @@ hr {
   border: none !important;
   box-shadow: none !important;
   width: 100%;
-  max-width: 400px; /* Ensure it doesn't get too wide */
-  padding: 0; /* Remove padding if not needed, or adjust */
+  max-width: 400px;
+  /* Ensure it doesn't get too wide */
+  padding: 0;
+  /* Remove padding if not needed, or adjust */
+}
+
+.auth-page input {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #4b5563 !important;
+  /* Slightly lighter than main border */
+  border-radius: 0 !important;
+  color: var(--text-main);
+  padding: 10px 0;
+  /* Vertical padding, no horizontal padding to align with text */
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+}
+
+.auth-page input:focus {
+  outline: none;
+  border-bottom-color: var(--primary) !important;
+  box-shadow: none !important;
+  /* Remove the default focus shadow/ring */
+}
+
+.auth-page input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
 }
