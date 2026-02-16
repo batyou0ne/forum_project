@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import CircularText from './CircularText';
+import CircularText from '../components/CircularText';
 import SplitText from "../components/SplitText";
 
 function Login({ onLogin }) {
