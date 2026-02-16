@@ -5,7 +5,9 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  
+  /* 1. DÜZELTME: Katı rengi sildik, şeffaf yaptık */
+  background-color: transparent; 
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,9 +27,12 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  place-items: center; /* İleride sayfa düzenini bozarsa display:flex ve bunu silebilirsin */
   min-width: 320px;
   min-height: 100vh;
+  
+  /* 2. DÜZELTME: Body'i de şeffaf yaptık */
+  background-color: transparent; 
 }
 
 h1 {
@@ -57,7 +62,8 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    /* 3. DÜZELTME: Gündüz modu beyaz duvarını da yıktık */
+    background-color: transparent; 
   }
   a:hover {
     color: #747bff;
@@ -80,6 +86,13 @@ button:focus-visible {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1; /* Her şeyin arkasına gönderir */
-  opacity: 0.6; /* Göz yormaması için hafif şeffaf yaptık */
+  z-index: -1; 
+  opacity: 0.8; /* Gözükmesi için biraz daha belirginleştirdim */
+}
+
+/* 4. DÜZELTME: Yazıların ve formların üstte tıklanabilir kalması için */
+.container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
 }
