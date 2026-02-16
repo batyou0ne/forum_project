@@ -6,9 +6,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
 
-
 import Aurora from "./components/Aurora";
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,35 +24,45 @@ function App() {
   };
 
   return (
-    <div className="container">
-      {isLoggedIn && (
-        <nav style={{ padding: "10px", backgroundColor: "#eee", marginBottom: "20px" }}>
-          <Link to="/" style={{ marginRight: "10px" }}>Anasayfa</Link>
-          <Link to="/create" style={{ marginRight: "10px" }}>Yeni Yazı Yaz</Link>
-          <button onClick={handleLogout}>Çıkış Yap</button>
-        </nav>
-      )}
-
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? <Posts /> : <Login onLogin={() => setIsLoggedIn(true)} />
-          }
+    <>
+      {/* 1. KESİN ÇÖZÜM AURORA ARKA PLANI */}
+      <div style={{ 
+        position: "fixed", 
+        top: 0, 
+        left: 0, 
+        width: "100vw", 
+        height: "100vh", 
+        zIndex: -1, 
+        pointerEvents: "none" 
+      }}>
+        <Aurora
+          colorStops={["#446bf2", "#0f1117", "#22c55e"]} 
+          amplitude={1.2}
+          blend={0.5}
+          speed={0.5}
         />
+      </div>
 
-        <Route path="/register" element={<Register />} />
+      {/* 2. SİTENİN ANA İÇERİĞİ (Aurora'nın önünde duracak) */}
+      <div className="container" style={{ position: "relative", zIndex: 10 }}>
+        {isLoggedIn && (
+          <nav>
+            <div>
+              <Link to="/">Anasayfa</Link>
+              <Link to="/create">Yeni Yazı Yaz</Link>
+            </div>
+            <button onClick={handleLogout}>Çıkış Yap</button>
+          </nav>
+        )}
 
-        <Route 
-          path="/create" 
-          element={
-            isLoggedIn ? <CreatePost /> : <Login onLogin={() => setIsLoggedIn(true)} />
-          } 
-        />
-
-        <Route path="/posts/:id" element={<PostDetail />} />
-      </Routes>
-    </div>
+        <Routes>
+          <Route path="/" element={isLoggedIn ? <Posts /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/create" element={isLoggedIn ? <CreatePost /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
+          <Route path="/posts/:id" element={<PostDetail />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 

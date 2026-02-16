@@ -198,5 +198,11 @@ export default function Aurora(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
 
-  return <div ref={ctnDom} className="aurora-container" />;
+  return (
+    <div 
+      ref={ctnDom} 
+      className="aurora-container" 
+      style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }} 
+    />
+  );
 }
