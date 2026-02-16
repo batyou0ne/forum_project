@@ -1,5 +1,7 @@
 import { useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import SplitText from "../components/SplitText";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -39,7 +41,17 @@ function Login({ onLogin }) {
   return (
     <div className="auth-page">
       <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <SplitText
+          text="Login"
+          tag="h2"
+          className=""
+          delay={50}
+          duration={1.2}
+          ease="circ.out"
+          splitType="chars,words"
+          from={{ opacity: 0, y: 30 }}
+          to={{ opacity: 1, y: 0 }}
+        />
 
         <input
           type="email"

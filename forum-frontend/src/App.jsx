@@ -6,7 +6,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
 
-import SplitText from "./components/SplitText";
+
 
 import Aurora from "./components/Aurora";
 
@@ -66,25 +66,5 @@ function App() {
     </>
   );
 }
-
-const handleAnimationComplete = () => {
-  console.log('All letters have animated!');
-};
-
-<SplitText
-  text="Hello, you!"
-  className="text-2xl font-semibold text-center"
-  delay={50}
-  duration={1.25}
-  ease="power3.out"
-  splitType="chars"
-  from={{ opacity: 0, y: 40 }}
-  to={{ opacity: 1, y: 0 }}
-  threshold={0.1}
-  rootMargin="-100px"
-  textAlign="center"
-  onLetterAnimationComplete={handleAnimationComplete}
-  showCallback
-/>
 
 export default App;
