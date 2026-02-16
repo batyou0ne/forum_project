@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import CircularText from './CircularText';
 import SplitText from "../components/SplitText";
 
 function Login({ onLogin }) {
@@ -51,6 +52,15 @@ function Login({ onLogin }) {
           splitType="chars,words"
           from={{ opacity: 0, y: 30 }}
           to={{ opacity: 1, y: 0 }}
+        />
+
+
+
+        <CircularText
+          text="WELCOME TO -DAILY CHATS- "
+          onHover="speedUp"
+          spinDuration={20}
+          className="custom-class"
         />
 
         <input
