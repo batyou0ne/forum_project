@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import API_URL from "../config";
 
 const getUserFromToken = () => {
     const token = localStorage.getItem("token");
@@ -44,9 +45,9 @@ function PostDetail() {
             try {
                 const token = localStorage.getItem("token");
 
-                // CHANGE: Use localhost for development
+                // CHANGE: Use dynamic API_URL
                 const response = await fetch(
-                    `http://localhost:3003/api/posts/${id}`,
+                    `${API_URL}/posts/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token || ""}`,
@@ -81,7 +82,7 @@ function PostDetail() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:3003/api/posts/${id}`, {
+            const response = await fetch(`${API_URL}/posts/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -110,7 +111,7 @@ function PostDetail() {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch(`http://localhost:3003/api/posts/${postId}/like`, {
+            const response = await fetch(`${API_URL}/posts/${postId}/like`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

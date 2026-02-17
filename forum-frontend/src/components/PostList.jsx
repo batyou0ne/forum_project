@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import API_URL from "../config";
 
 function PostList() {
     const [posts, setPosts] = useState([]);
@@ -7,7 +8,7 @@ function PostList() {
     useEffect(() => {
         const token = localStorage.getItem("token");
 
-        fetch("http://localhost:3003/api/posts", {
+        fetch(`${API_URL}/posts`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },

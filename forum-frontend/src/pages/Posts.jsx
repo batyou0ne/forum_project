@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import API_URL from "../config";
 
 
 function Posts() {
@@ -15,7 +16,7 @@ function Posts() {
 
                 const token = localStorage.getItem("token");
 
-                const response = await fetch(`http://localhost:3003/api/posts?page=${page}&limit=5`, {
+                const response = await fetch(`${API_URL}/posts?page=${page}&limit=5`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

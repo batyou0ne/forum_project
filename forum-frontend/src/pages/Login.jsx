@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import CircularText from '../components/CircularText';
 import SplitText from "../components/SplitText";
 
+import API_URL from "../config";
+
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +15,7 @@ function Login({ onLogin }) {
 
     try {
       const response = await fetch(
-        "http://localhost:3003/api/auth/login",
+        `${API_URL}/auth/login`,
         {
           method: "POST",
           headers: {
