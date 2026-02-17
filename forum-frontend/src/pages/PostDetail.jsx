@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API_URL from "../config";
@@ -36,6 +35,23 @@ function PostDetail() {
     const [likeCount, setLikeCount] = useState(0);
     const [dislikeCount, setDislikeCount] = useState(0);
 
+    // State for comments
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState("");
+
+    const fetchComments = async () => {
+        try {
+            // Correct API URL: /api/comments/:postId
+            const response = await fetch(`${API_URL}/comments/${id}`);
+            if (response.ok) {
+                const data = await response.json();
+                setComments(data);
+            }
+        } catch (error) {
+            console.error("Yorumlar yüklenirken hata oluştu:", error);
+        }
+    };
+
     useEffect(() => {
         const user = getUserFromToken();
         setCurrentUser(user);
@@ -45,7 +61,6 @@ function PostDetail() {
             try {
                 const token = localStorage.getItem("token");
 
-                // CHANGE: Use dynamic API_URL
                 const response = await fetch(
                     `${API_URL}/posts/${id}`,
                     {
@@ -65,6 +80,9 @@ function PostDetail() {
                 setPost(data);
                 setLikeCount(data.like_count || 0);
                 setDislikeCount(data.dislike_count || 0);
+
+                // Fetch comments after post is loaded
+                fetchComments();
 
             } catch (err) {
                 console.error("Post alınırken hata:", err);
@@ -102,9 +120,50 @@ function PostDetail() {
         }
     };
 
+    const handleAddComment = async (e) => {
+        e.preventDefault();
+
+        const currentUserId = localStorage.getItem("userId");
+        const token = localStorage.getItem("token"); // Fixed: localStorage.getItem
+
+        if (!currentUserId || !token) {
+            alert("Yorum yapmak için giriş yapmalısınız!");
+            return;
+        }
+        if (!newComment.trim()) {
+            alert("Boş yorum gönderemezsiniz!");
+            return;
+        }
+
+        try {
+            // Correct API URL: /api/comments/:postId
+            const response = await fetch(`${API_URL}/comments/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    userId: currentUserId, // Backend might expect this or extract from token
+                    content: newComment
+                }),
+            });
+
+            if (response.ok) {
+                setNewComment(""); // Clear input
+                fetchComments(); // Refresh list
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || "Yorum eklenemedi.");
+            }
+        } catch (error) {
+            console.error("Yorum gönderilemedi:", error);
+        }
+    };
+
     const handleReaction = async (postId, type) => {
         if (!currentUser) {
-            alert("Oy vermek için giriş yapmalısınız!");
+            alert("Like atmak için giriş yapmalısınız!");
             return;
         }
 
@@ -207,11 +266,57 @@ function PostDetail() {
 
             <hr />
 
+            {/* Comments Section */}
+            <div style={{ marginTop: '30px' }}>
+                <h3>Yorumlar</h3>
+
+                {currentUser ? (
+                    <form onSubmit={handleAddComment} style={{ marginBottom: '20px' }}>
+                        <textarea
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            placeholder="Bir yorum yaz..."
+                            rows="3"
+                            style={{ width: '100%', marginBottom: '10px' }}
+                        />
+                        <button type="submit">Gönder</button>
+                    </form>
+                ) : (
+                    <p>Yorum yapmak için giriş yapmalısınız.</p>
+                )}
+
+                <div className="comments-list">
+                    {comments.length === 0 ? (
+                        <p>Henüz yorum yok. İlk yorumu sen yap!</p>
+                    ) : (
+                        comments.map(comment => (
+                            <div key={comment.id} style={{
+                                backgroundColor: '#1f2937',
+                                padding: '15px',
+                                borderRadius: '10px',
+                                marginBottom: '10px',
+                                border: '1px solid #374151'
+                            }}>
+                                <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#60a5fa' }}>
+                                    Kullanıcı {comment.user_id}
+                                    <span style={{ fontSize: '0.8em', color: '#9ca3af', marginLeft: '10px', fontWeight: 'normal' }}>
+                                        {new Date(comment.created_at).toLocaleDateString()}
+                                    </span>
+                                </p>
+                                <p style={{ margin: 0 }}>{comment.content}</p>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
+
             {canDelete && (
-                <button
-                    onClick={handleDelete}
-                    className="delete-btn"
-                >Post'u sil</button>
+                <div style={{ marginTop: '20px' }}>
+                    <button
+                        onClick={handleDelete}
+                        className="delete-btn"
+                    >Post'u sil</button>
+                </div>
             )}
         </div>
     );
