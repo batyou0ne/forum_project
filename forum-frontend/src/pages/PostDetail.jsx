@@ -299,7 +299,7 @@ function PostDetail() {
                                 border: '1px solid #374151'
                             }}>
                                 <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#60a5fa' }}>
-                                    Kullanıcı {comment.user_id}
+                                    {comment.username}
                                     <span style={{ fontSize: '0.8em', color: '#9ca3af', marginLeft: '10px', fontWeight: 'normal' }}>
                                         {new Date(comment.created_at).toLocaleDateString()}
                                     </span>

@@ -28,10 +28,11 @@ exports.getCommentsByPost = async (req, res) => {
 
         const sql =
             `
-            SELECT id, post_id, parent_id, user_id, content, created_at
+            SELECT comments.id, comments.post_id, comments.parent_id, comments.user_id, comments.content, comments.created_at, users.username
             FROM comments
-            WHERE post_id = ?
-            ORDER BY created_at ASC
+            JOIN users ON comments.user_id = users.id
+            WHERE comments.post_id = ?
+            ORDER BY comments.created_at ASC
         `;
 
         const [rows] = await db.query(sql, [postId]);
@@ -45,6 +46,7 @@ exports.getCommentsByPost = async (req, res) => {
                 post_id: row.post_id,
                 parent_id: row.parent_id,
                 user_id: row.user_id,
+                username: row.username, // Add username
                 content: row.content,
                 created_at: row.created_at,
                 //...row, bu yukarıdakileri tek tek yazmak yerine böyle de yazabiliyormuşuz
