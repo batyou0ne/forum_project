@@ -61,7 +61,8 @@ exports.getCommentsByPost = async (req, res) => {
 
         return res.json(rootComments);
     } catch (err) {
-        return res.status(500).json({ message: "Comments could not be fetched!" })
+        console.error("Error fetching comments:", err);
+        return res.status(500).json({ message: "Comments could not be fetched!", error: err.message })
     }
 };
 
