@@ -17,7 +17,8 @@ exports.createComment = async (req, res) => {
         return res.status(201).json({ message: "Comment created successfully!", commentId: result.insertId });
 
     } catch (err) {
-        return res.status(500).json({ message: "Comment could not be created!" })
+        console.error("Error creating comment:", err);
+        return res.status(500).json({ message: "Comment could not be created!", error: err.message })
     }
 };
 
