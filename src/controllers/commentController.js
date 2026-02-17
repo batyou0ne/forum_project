@@ -43,18 +43,18 @@ exports.getCommentsByPost = async (req, res) => {
                 id: row.id,
                 post_id: row.post_id,
                 parent_id: row.parent_id,
-                user_id:row.user_id,
-                content:row.content,
-                created_at:row.created_at,
+                user_id: row.user_id,
+                content: row.content,
+                created_at: row.created_at,
                 //...row, bu yukarıdakileri tek tek yazmak yerine böyle de yazabiliyormuşuz
                 replies: []
             };
         });
 
         rows.forEach(row => {
-            if (row.parent_id !== null) {
+            if (row.parent_id !== null && commentMap[row.parent_id]) {
                 commentMap[row.parent_id].replies.push(commentMap[row.id]);
-            } else {
+            } else if (row.parent_id === null) {
                 rootComments.push(commentMap[row.id]);
             }
         });
@@ -75,18 +75,18 @@ exports.deleteComment = async (req, res) => {
         let sql;
         let params;
 
-        if(role === "admin"){
-            sql =  `
+        if (role === "admin") {
+            sql = `
             DELETE FROM comments
             WHERE id = ?
         `;
-        params = [commentId]
-        }else{
-            sql =  `
+            params = [commentId]
+        } else {
+            sql = `
             DELETE FROM comments
             WHERE id = ? AND user_id = ?
         `;
-        params = [commentId, userId]
+            params = [commentId, userId]
         }
 
 
