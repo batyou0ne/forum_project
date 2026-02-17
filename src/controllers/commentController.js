@@ -37,6 +37,8 @@ exports.getCommentsByPost = async (req, res) => {
 
         const [rows] = await db.query(sql, [postId]);
 
+        console.log("DB ROWS:", rows); // Debug log
+
         const commentMap = {};
         const rootComments = [];
 
