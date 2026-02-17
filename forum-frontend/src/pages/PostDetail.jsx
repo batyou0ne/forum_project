@@ -183,7 +183,7 @@ function PostDetail() {
                         fontWeight: 'bold'
                     }}
                 >
-                    <span>👍</span> Beğen ({likeCount})
+                    <span>👍</span>({likeCount})
                 </button>
 
                 <button
@@ -201,7 +201,7 @@ function PostDetail() {
                         fontWeight: 'bold'
                     }}
                 >
-                    <span>👎</span> Beğenme ({dislikeCount})
+                    <span>👎</span> ({dislikeCount})
                 </button>
             </div>
 
