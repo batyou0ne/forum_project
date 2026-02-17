@@ -11,7 +11,7 @@ function Register() {
         e.preventDefault();
 
         try {
-            const response = await fetch("https://forum-project-batu.onrender.com/api/auth/register", {
+            const response = await fetch("http://localhost:3003/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

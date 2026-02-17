@@ -13,20 +13,20 @@ function createPost() {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch("https://forum-project-batu.onrender.com/api/posts",{
-                method : "POST",
-                headers : {
+            const response = await fetch("http://localhost:3003/api/posts", {
+                method: "POST",
+                headers: {
                     "Content-Type": "application/json",
-                    Authorization : `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
 
-                body: JSON.stringify({title,content})
+                body: JSON.stringify({ title, content })
             });
 
-            if(response.ok) {
+            if (response.ok) {
                 alert("Post başarıyla oluşturuldu!");
                 navigate("/");
-            }else{
+            } else {
                 alert("Bir hata oluştu!")
             }
 
@@ -38,10 +38,10 @@ function createPost() {
     return (
         <div>
             <h2>Yeni Gönderi Oluştur</h2>
-            
+
             {/* Form gönderilince handleSubmit çalışsın */}
             <form onSubmit={handleSubmit}>
-                
+
                 <div style={{ marginBottom: "10px" }}>
                     <label>Başlık:</label><br />
                     <input

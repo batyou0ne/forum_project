@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    
+
     await db.query(sql, [username, email, hashedPassword]);
 
     res.status(201).json({ message: "Kayıt başarıyla oluşturuldu! 🎉" });
@@ -22,8 +22,8 @@ exports.register = async (req, res) => {
     console.error("Kayıt Hatası:", error);
 
     if (error.code === 'ER_DUP_ENTRY') {
-      return res.status(400).json({ 
-        message: "Bu kullanıcı adı veya e-posta zaten kullanımda!" 
+      return res.status(400).json({
+        message: "Bu kullanıcı adı veya e-posta zaten kullanımda!"
       });
     }
 
@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
 
     // 1. Kullanıcıyı bul
     const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-    
+
     if (users.length === 0) {
       return res.status(401).json({ message: "Kullanıcı bulunamadı veya şifre yanlış." });
     }
@@ -55,15 +55,16 @@ exports.login = async (req, res) => {
     // 3. Token oluştur (JWT_SECRET .env dosyasında olmalı)
     // Eğer JWT kullanmıyorsan burayı basitleştirebiliriz ama genelde böyledir.
     const token = jwt.sign(
-        { id: user.id, username: user.username }, 
-        process.env.JWT_SECRET || "gizlisifre", 
-        { expiresIn: "1h" }
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET || "gizlisifre",
+      { expiresIn: "1h" }
     );
 
-    res.status(200).json({ 
-        message: "Giriş başarılı!",
-        token: token,
-        user: { id: user.id, username: user.username }
+    res.status(200).json({
+      message: "Giriş başarılı!",
+      token: token,
+      userId: user.id, // Frontend bu şekilde bekliyor
+      user: { id: user.id, username: user.username }
     });
 
   } catch (error) {

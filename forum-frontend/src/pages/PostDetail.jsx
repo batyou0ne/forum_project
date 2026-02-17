@@ -4,13 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const getUserFromToken = () => {
     const token = localStorage.getItem("token");
-    
-    if(!token) return null;
+
+    if (!token) return null;
 
     try {
         const base64url = token.split(`.`)[1];
         const base64 = base64url.replace(/-/g, `+`).replace(/_/g, `/`);
-        const jsonPayload = decodeURIComponent(window.atob(base64).split(``).map(function(c) {
+        const jsonPayload = decodeURIComponent(window.atob(base64).split(``).map(function (c) {
             return `%` + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
 
@@ -31,6 +31,10 @@ function PostDetail() {
     const [error, setError] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
 
+    // State for likes/dislikes
+    const [likeCount, setLikeCount] = useState(0);
+    const [dislikeCount, setDislikeCount] = useState(0);
+
     useEffect(() => {
         const user = getUserFromToken();
         setCurrentUser(user);
@@ -40,11 +44,12 @@ function PostDetail() {
             try {
                 const token = localStorage.getItem("token");
 
+                // CHANGE: Use localhost for development
                 const response = await fetch(
-                    `https://forum-project-batu.onrender.com/api/posts/${id}`,
+                    `http://localhost:3003/api/posts/${id}`,
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`,
+                            Authorization: `Bearer ${token || ""}`,
                         },
                     }
                 );
@@ -57,6 +62,8 @@ function PostDetail() {
                 const data = await response.json();
                 console.log("GELEN POST:", data);
                 setPost(data);
+                setLikeCount(data.like_count || 0);
+                setDislikeCount(data.dislike_count || 0);
 
             } catch (err) {
                 console.error("Post alınırken hata:", err);
@@ -69,28 +76,80 @@ function PostDetail() {
         fetchPost();
     }, [id]);
 
-    const handDelete = async () => {
+    const handleDelete = async () => {
         if (!window.confirm("Bu postu silmek istediğinden emin misin?")) return;
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`https://forum-project-batu.onrender.com/api/posts/${id}`,{
-                method : "DELETE",
-                headers : {
-                    Authorization : `Bearer ${token}`
+            const response = await fetch(`http://localhost:3003/api/posts/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
                 },
             })
 
-            if(response.ok){
+            if (response.ok) {
                 alert("Post başarıyla silindi.");
                 navigate("/");
-            } else{
+            } else {
                 const data = await response.json();
                 alert(data.message || "Silme işlemi başarısız.")
             }
         } catch (error) {
             console.error("Silme hatası", error);
             alert("Bir hata oluştu");
+        }
+    };
+
+    const handleReaction = async (postId, type) => {
+        if (!currentUser) {
+            alert("Oy vermek için giriş yapmalısınız!");
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(`http://localhost:3003/api/posts/${postId}/like`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ type }), // Backend expects 'type' in body
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                const action = result.action; // 'added', 'removed', 'updated'
+
+                if (type === 'like') {
+                    if (action === 'added') {
+                        setLikeCount(prev => prev + 1);
+                    } else if (action === 'removed') {
+                        setLikeCount(prev => Math.max(0, prev - 1));
+                    } else if (action === 'updated') {
+                        setLikeCount(prev => prev + 1);
+                        setDislikeCount(prev => Math.max(0, prev - 1));
+                    }
+                } else if (type === 'dislike') {
+                    if (action === 'added') {
+                        setDislikeCount(prev => prev + 1);
+                    } else if (action === 'removed') {
+                        setDislikeCount(prev => Math.max(0, prev - 1));
+                    } else if (action === 'updated') {
+                        setDislikeCount(prev => prev + 1);
+                        setLikeCount(prev => Math.max(0, prev - 1));
+                    }
+                }
+
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || "Bir hata oluştu");
+            }
+
+        } catch (error) {
+            console.error("Tepki gönderilemedi:", error);
         }
     };
 
@@ -107,11 +166,49 @@ function PostDetail() {
             <p><strong>Yazar:</strong> {post.username}</p>
             <p><small>{new Date(post.created_at).toLocaleDateString()}</small></p>
 
+            <div className="reaction-buttons" style={{ display: 'flex', gap: '15px', marginTop: '15px' }}>
+                <button
+                    onClick={() => handleReaction(post.id, 'like')}
+                    style={{
+                        backgroundColor: '#1f2937',
+                        color: '#4ade80',
+                        border: '1px solid #4ade80',
+                        padding: '8px 16px',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontWeight: 'bold'
+                    }}
+                >
+                    <span>👍</span> Beğen ({likeCount})
+                </button>
+
+                <button
+                    onClick={() => handleReaction(post.id, 'dislike')}
+                    style={{
+                        backgroundColor: '#1f2937',
+                        color: '#f87171',
+                        border: '1px solid #f87171',
+                        padding: '8px 16px',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontWeight: 'bold'
+                    }}
+                >
+                    <span>👎</span> Beğenme ({dislikeCount})
+                </button>
+            </div>
+
             <hr />
 
             {canDelete && (
                 <button
-                    onClick = {handDelete}
+                    onClick={handleDelete}
                     className="delete-btn"
                 >Post'u sil</button>
             )}

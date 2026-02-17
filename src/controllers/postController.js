@@ -31,7 +31,9 @@ exports.getAllPosts = async (req, res) => {
 
     const sql =
       `
-      SELECT posts.id, posts.title, posts.content, posts.created_at, users.username
+      SELECT posts.id, posts.title, posts.content, posts.created_at, users.username,
+      (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
+      (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
       FROM posts
       JOIN users ON posts.user_id = users.id
       ORDER BY posts.created_at DESC
@@ -54,12 +56,14 @@ exports.getAllPosts = async (req, res) => {
   }
 };
 
-exports.getPostById =  async (req, res) => {
+exports.getPostById = async (req, res) => {
   try {
     const postId = req.params.id;
 
-  const sql = `
-        SELECT posts.id,posts.user_id, posts.title, posts.content, posts.created_at, users.username
+    const sql = `
+        SELECT posts.id,posts.user_id, posts.title, posts.content, posts.created_at, users.username,
+        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
+        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
         FROM posts
         JOIN users ON posts.user_id = users.id
         WHERE posts.id = ?
@@ -67,12 +71,12 @@ exports.getPostById =  async (req, res) => {
 
     const [results] = await db.query(sql, [postId]);
 
-    if(results.length===0){
-      return res.status(404).json({message:"Post not found"})
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Post not found" })
     }
 
     res.json(results[0])
-  
+
   } catch (error) {
     console.error("GET POST BY ID ERROR:", err);
     res.status(500).json({ message: err.message });

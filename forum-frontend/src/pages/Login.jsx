@@ -13,7 +13,7 @@ function Login({ onLogin }) {
 
     try {
       const response = await fetch(
-        "https://forum-project-batu.onrender.com/api/auth/login",
+        "http://localhost:3003/api/auth/login",
         {
           method: "POST",
           headers: {
@@ -31,6 +31,7 @@ function Login({ onLogin }) {
       }
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.userId);
 
       onLogin();
 
