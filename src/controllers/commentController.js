@@ -30,7 +30,7 @@ exports.getCommentsByPost = async (req, res) => {
             `
             SELECT comments.id, comments.post_id, comments.parent_id, comments.user_id, comments.content, comments.created_at, users.username
             FROM comments
-            JOIN users ON comments.user_id = users.id
+            LEFT JOIN users ON comments.user_id = users.id
             WHERE comments.post_id = ?
             ORDER BY comments.created_at ASC
         `;
