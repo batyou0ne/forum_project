@@ -154,8 +154,7 @@ function PostDetail() {
                 fetchComments(); // Refresh list
             } else {
                 const errorData = await response.json();
-                console.error("Yorum hatası backend:", errorData);
-                alert((errorData.message || "Yorum eklenemedi.") + (errorData.error ? ("\nHata Detayı: " + errorData.error) : ""));
+                alert(errorData.message || "Yorum eklenemedi.");
             }
         } catch (error) {
             console.error("Yorum gönderilemedi:", error);
