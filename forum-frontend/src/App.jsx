@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
+import Profile from "./pages/Profile";
 
 
 
@@ -12,6 +13,7 @@ import DotGrid from './components/DotGrid';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -23,6 +25,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    setIsProfileOpen(false);
   };
 
   return (
@@ -56,9 +59,33 @@ function App() {
             <Link to="/">Anasayfa</Link>
             <Link to="/create">Yeni Gönderi Paylaş</Link>
           </div>
-          <button onClick={handleLogout}>Çıkış Yap</button>
+          <button
+            onClick={() => setIsProfileOpen(true)}
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              backgroundColor: "#4f46e5",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.2rem",
+              fontWeight: "bold"
+            }}
+          >
+            P
+          </button>
         </nav>
       )}
+
+      <Profile
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        onLogout={handleLogout}
+      />
 
       <div className="container" style={{ position: "relative", zIndex: 10 }}>
         <Routes>
