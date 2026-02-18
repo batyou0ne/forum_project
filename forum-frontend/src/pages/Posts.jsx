@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import API_URL from "../config";
 
 
 function Posts() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = parseInt(searchParams.get("page") || "1", 10);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -36,6 +38,10 @@ function Posts() {
         fetchPosts();
     }, [page]);
 
+    const goToPage = (newPage) => {
+        setSearchParams({ page: newPage });
+    };
+
     if (loading) {
         return <p>Loading posts...</p>;
     }
@@ -54,9 +60,10 @@ function Posts() {
                     <p>{post.content.substring(0, 500)}</p>
                 </div>
             ))}
+
             <div style={{ marginTop: 20, display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
                 <button
-                    onClick={() => setPage(page - 1)}
+                    onClick={() => goToPage(page - 1)}
                     disabled={page === 1}
                     style={{
                         backgroundColor: "black",
@@ -77,7 +84,7 @@ function Posts() {
                 </span>
 
                 <button
-                    onClick={() => setPage(page + 1)}
+                    onClick={() => goToPage(page + 1)}
                     disabled={page === totalPages}
                     style={{
                         backgroundColor: "black",
@@ -95,12 +102,7 @@ function Posts() {
             </div>
 
         </div>
-
-
-
     );
-
-
 }
 
 export default Posts;
