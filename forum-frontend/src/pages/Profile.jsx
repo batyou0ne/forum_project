@@ -4,6 +4,7 @@ import API_URL from "../config";
 const Profile = ({ isOpen, onClose, onLogout }) => {
     const [userInfo, setUserInfo] = useState(null);
     const [userPosts, setUserPosts] = useState([]);
+    const [showPosts, setShowPosts] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -104,9 +105,63 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                         </div>
 
                         <div style={{ flex: 1, overflowY: "auto" }}>
-                            {/* Future: User Posts or Stats */}
-                            <p style={{ textAlign: "center", fontStyle: "italic", opacity: 0.5 }}>
-                                Henüz biyografi yok.
+                            {/* Postlarım Section */}
+                            <div
+                                style={{
+                                    marginTop: "20px",
+                                    position: "relative",
+                                    cursor: "pointer",
+                                }}
+                                onMouseEnter={() => setShowPosts(true)}
+                                onMouseLeave={() => setShowPosts(false)}
+                            >
+                                <h3 style={{
+                                    fontSize: "1.2rem",
+                                    textAlign: "center",
+                                    borderBottom: "1px solid rgba(255,255,255,0.3)",
+                                    paddingBottom: "10px",
+                                    marginBottom: "10px"
+                                }}>
+                                    Postlarım
+                                </h3>
+
+                                <div style={{
+                                    maxHeight: showPosts ? "300px" : "0",
+                                    overflow: "hidden",
+                                    transition: "max-height 0.3s ease-in-out",
+                                    backgroundColor: "rgba(0,0,0,0.3)",
+                                    borderRadius: "8px",
+                                }}>
+                                    {userPosts.length > 0 ? (
+                                        userPosts.map((post) => (
+                                            <div key={post._id} style={{
+                                                padding: "10px",
+                                                borderBottom: "1px solid rgba(255,255,255,0.1)",
+                                                fontSize: "0.9rem",
+                                                color: "#ddd",
+                                                whiteSpace: "nowrap",
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis"
+                                            }}>
+                                                {post.title}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p style={{
+                                            padding: "10px",
+                                            textAlign: "center",
+                                            fontSize: "0.8rem",
+                                            color: "#aaa"
+                                        }}>
+                                            Henüz gönderiniz yok.
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Future: User Stats */}
+                            <p style={{ textAlign: "center", fontStyle: "italic", opacity: 0.5, marginTop: "20px" }}>
+                                {userInfo.bio || "Henüz biyografi yok."}
                             </p>
                         </div>
 
