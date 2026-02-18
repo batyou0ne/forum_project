@@ -60,7 +60,7 @@
 .comment-form button[type="submit"]:hover {
     background-color: #f5c518;
     color: #000;
-    border-color: #f5c518;
+    --border-color: #f5c51864;
 }
 
 .comment-form textarea {
