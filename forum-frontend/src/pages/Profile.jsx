@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import API_URL from "../config";
 
 const Profile = ({ isOpen, onClose, onLogout }) => {
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState(null);
     const [userPosts, setUserPosts] = useState([]);
     const [showPosts, setShowPosts] = useState(false);
@@ -148,15 +150,23 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                                 }}>
                                     {userPosts.length > 0 ? (
                                         userPosts.map((post) => (
-                                            <div key={post._id} style={{
-                                                padding: "10px",
-                                                borderBottom: "1px solid rgba(255,255,255,0.1)",
-                                                fontSize: "0.9rem",
-                                                color: "#ddd",
-                                                whiteSpace: "nowrap",
-                                                overflow: "hidden",
-                                                textOverflow: "ellipsis"
-                                            }}>
+                                            <div
+                                                key={post._id}
+                                                onClick={() => { navigate(`/posts/${post._id}`); onClose(); }}
+                                                style={{
+                                                    padding: "10px",
+                                                    borderBottom: "1px solid rgba(255,255,255,0.1)",
+                                                    fontSize: "0.9rem",
+                                                    color: "#ddd",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                    cursor: "pointer",
+                                                    transition: "background 0.2s",
+                                                }}
+                                                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}
+                                                onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+                                            >
                                                 {post.title}
                                             </div>
                                         ))
