@@ -4,7 +4,7 @@ exports.toggleLike = async (req, res) => {
     try {
         const postId = req.params.id;
         const { type } = req.body;
-        const userId = req.user.id; // Token'dan gelen user ID'yi kullanıyoruz
+        const userId = req.user.id;
 
         if (!['like', 'dislike'].includes(type)) {
             return res.status(400).json({ message: "Geçersiz işlem tipi!" });

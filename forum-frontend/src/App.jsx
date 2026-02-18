@@ -8,7 +8,7 @@ import CreatePost from "./pages/createPost";
 
 
 
-import Aurora from "./components/Aurora";
+import DotGrid from './components/DotGrid';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,20 +27,19 @@ function App() {
 
   return (
     <>
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: -1,
-        pointerEvents: "none"
-      }}>
-        <Aurora
-          colorStops={["#446bf2", "#0f1117", "#22c55e"]}
-          amplitude={1.2}
-          blend={0.5}
-          speed={0.5}
+
+
+      <div style={{ width: '100%', height: '600px', position: 'relative' }}>
+        <DotGrid
+          dotSize={5}
+          gap={25}
+          baseColor="#271E37"
+          activeColor="#5227FF"
+          proximity={120}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
         />
       </div>
 
