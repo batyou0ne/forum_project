@@ -24,6 +24,10 @@ exports.getUserProfile = async (req, res) => {
 
     } catch (error) {
         console.error("Profil Çekme Hatası:", error);
-        res.status(500).json({ message: "Sunucu hatası oluştu." });
+        res.status(500).json({
+            message: "Sunucu hatası oluştu.",
+            error: error.message,
+            stack: error.stack
+        });
     }
 };
