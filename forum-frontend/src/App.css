@@ -2,14 +2,14 @@
   --bg-main: #000000;
   --bg-surface: #000000;
   --bg-surface-soft: #1a1a1a;
-  --border-color: #e6e6e6;
+  --border-color: #f5c518;
   --primary: #f5c518;
   --primary-hover: #e6b800;
   --danger: #ef4444;
   --danger-hover: #dc2626;
   --text-main: #ffffff;
   --text-muted: #9ca3af;
-  --shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+  --shadow: 0 4px 6px -1px rgba(255, 197, 24, 0.1), 0 2px 4px -1px rgba(255, 197, 24, 0.06);
 }
 
 * {
@@ -38,9 +38,7 @@ a:hover {
 .container {
   width: min(920px, 100% - 2rem);
   margin: 0 auto 2rem;
-  /* Removed top margin, handled by padding-top now */
-  padding-top: 100px;
-  /* Space for the fixed navbar */
+  padding-top: 110px;
 }
 
 nav {
@@ -58,11 +56,11 @@ nav {
   padding: 1rem 1.5rem !important;
   margin: 0 !important;
 
-  background: #f5c518 !important;
-  backdrop-filter: none;
-  border-bottom: none;
+  background: #000 !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid #f5c518;
   border-radius: 0;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 16px rgba(245, 197, 24, 0.15);
 
   pointer-events: auto;
 }
@@ -84,7 +82,7 @@ nav>button:last-child {
 
 
 nav a {
-  color: #000;
+  color: #f5c518;
   font-weight: 600;
   margin-right: 0 !important;
   padding: 0.45rem 0.7rem;
@@ -93,14 +91,14 @@ nav a {
 
 nav a:hover {
   color: #000;
-  background: rgba(0, 0, 0, 0.12);
+  background: #f5c518;
 }
 
 .nav-search-box {
   display: flex;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid #f5c518;
+  background-color: #000;
   width: 200px;
   transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.35s ease;
@@ -110,7 +108,7 @@ nav a:hover {
 .nav-search-box.focused,
 .nav-search-box:hover {
   width: 320px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 1px #f5c518;
 }
 
 .nav-search-input {
@@ -118,7 +116,7 @@ nav a:hover {
   background: transparent;
   border: none !important;
   border-radius: 0 !important;
-  color: #000;
+  color: #fff;
   font-size: 0.88rem;
   padding: 8px 12px;
   margin: 0 !important;
@@ -133,25 +131,25 @@ nav a:hover {
 }
 
 .nav-search-input::placeholder {
-  color: rgba(0, 0, 0, 0.45);
+  color: #666;
 }
 
 .nav-search-btn {
   background: transparent;
   border: none;
-  border-left: 1px solid rgba(0, 0, 0, 0.3);
-  color: #000;
+  border-left: 1px solid #f5c518;
+  color: #f5c518;
   padding: 8px 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   border-radius: 0;
 }
 
 .nav-search-btn:hover {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: #f5c518;
   color: #000;
 }
 
@@ -178,11 +176,9 @@ form,
 .post-card {
   background: transparent;
   border: none;
-  border-bottom: 1px solid #e6e6e6;
-  /* Separator line */
+  border-bottom: 1px solid #f5c518;
   border-radius: 0;
   padding: 1.5rem 0;
-  /* Vertical padding */
   margin-bottom: 0;
   box-shadow: none;
 }

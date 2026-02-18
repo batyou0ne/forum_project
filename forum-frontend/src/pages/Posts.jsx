@@ -20,7 +20,7 @@ function Posts() {
 
                 const url = new URL(`${API_URL}/posts`);
                 url.searchParams.set("page", page);
-                url.searchParams.set("limit", 5);
+                url.searchParams.set("limit", 15);
                 if (search) url.searchParams.set("search", search);
 
                 const response = await fetch(url.toString(), {
@@ -77,41 +77,23 @@ function Posts() {
                 ))
             )}
 
-            <div style={{ marginTop: 20, display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
+            <div className="pagination">
                 <button
+                    className="page-btn prev-btn"
                     onClick={() => goToPage(page - 1)}
                     disabled={page === 1}
-                    style={{
-                        backgroundColor: "black",
-                        color: "white",
-                        border: "1px solid white",
-                        borderRadius: "0",
-                        padding: "10px 20px",
-                        fontSize: "1.1rem",
-                        cursor: page === 1 ? "not-allowed" : "pointer",
-                        opacity: page === 1 ? 0.5 : 1
-                    }}
                 >
                     &lt; Önceki
                 </button>
 
-                <span style={{ margin: "0 10px", fontWeight: "bold" }}>
+                <span className="page-info">
                     Sayfa {page} / {totalPages}
                 </span>
 
                 <button
+                    className="page-btn next-btn"
                     onClick={() => goToPage(page + 1)}
                     disabled={page === totalPages}
-                    style={{
-                        backgroundColor: "black",
-                        color: "white",
-                        border: "1px solid white",
-                        borderRadius: "0",
-                        padding: "10px 20px",
-                        fontSize: "1.1rem",
-                        cursor: page === totalPages ? "not-allowed" : "pointer",
-                        opacity: page === totalPages ? 0.5 : 1
-                    }}
                 >
                     Sonraki &gt;
                 </button>
