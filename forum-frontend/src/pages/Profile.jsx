@@ -14,14 +14,21 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 const token = localStorage.getItem("token");
                 if (!token) return;
 
+                console.log("Fetching profile with token:", token);
                 const response = await fetch(`${API_URL}/users/profile`, {
                     headers: { authorization: `Bearer ${token}` }
                 });
 
+                console.log("Profile response status:", response.status);
+
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("Profile data received:", data);
                     setUserInfo(data.userInfo);
                     setUserPosts(data.userPosts);
+                } else {
+                    const errorData = await response.json();
+                    console.error("Profile fetch failed:", errorData);
                 }
             } catch (error) {
                 console.error("Profil yüklenemedi:", error);
