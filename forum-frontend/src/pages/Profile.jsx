@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import API_URL from "../config";
-import LiquidGlassButton from "../components/LiquidGlassButton";
 
 const Profile = ({ isOpen, onClose, onLogout }) => {
     const [userInfo, setUserInfo] = useState(null);
@@ -131,11 +130,22 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                     <p>Kullanıcı bilgisi bulunamadı.</p>
                 )}
 
-                <div style={{ marginTop: "auto" }}>
-                    <LiquidGlassButton onClick={onLogout}>
-                        Çıkış Yap
-                    </LiquidGlassButton>
-                </div>
+                <button
+                    onClick={onLogout}
+                    style={{
+                        width: "100%",
+                        padding: "12px",
+                        backgroundColor: "#ef4444",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                        fontSize: "1rem",
+                        marginTop: "auto"
+                    }}
+                >
+                    Çıkış Yap
+                </button>
             </div>
         </>
     );
