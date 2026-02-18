@@ -14,8 +14,8 @@
 
 .search-clear {
     background: transparent;
-    border: 1px solid #f5c518;
-    color: #f5c518;
+    border: 1px solid #e6e6e6;
+    color: #9ca3af;
     font-size: 0.78rem;
     padding: 2px 8px;
     cursor: pointer;
@@ -51,7 +51,7 @@
     overflow: hidden;
     background-color: #000;
     color: #fff;
-    border: 1px solid #f5c518;
+    border: 1px solid #e6e6e6;
     border-radius: 0;
     padding: 10px 24px;
     font-size: 1rem;
