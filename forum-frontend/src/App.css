@@ -141,27 +141,7 @@ span {
   color: var(--text-muted);
 }
 
-button {
-  border: 0;
-  border-radius: 10px;
-  background: var(--primary);
-  color: #fff;
-  font-weight: 700;
-  padding: 0.65rem 1.05rem;
-  cursor: pointer;
-  transition: transform 0.16s ease, background 0.2s ease, opacity 0.2s ease;
-}
 
-button:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-}
-
-button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  transform: none;
-}
 
 .post-card h3 {
   margin: 0 0 0.6rem;
