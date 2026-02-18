@@ -43,26 +43,40 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
 
     return (
         <>
+            {/* Overlay - dışarı tıklayınca kapat */}
+            {isOpen && (
+                <div
+                    onClick={onClose}
+                    style={{
+                        position: "fixed",
+                        inset: 0,
+                        zIndex: 999,
+                        background: "transparent",
+                    }}
+                />
+            )}
 
             {/* Sidebar */}
             <div style={{
                 position: "fixed",
-                top: 0,
-                right: 0,
+                top: "16px",
+                right: "16px",
+                bottom: "16px",
                 width: "20%",
                 minWidth: "300px",
-                height: "100vh",
+                height: "auto",
                 backgroundColor: "hsla(0, 0%, 0%, 0.78)",
                 backdropFilter: "blur(15px)",
                 color: "#767c89",
-                transform: isOpen ? "translateX(0)" : "translateX(100%)",
+                transform: isOpen ? "translateX(0)" : "translateX(calc(100% + 16px))",
                 transition: "transform 0.3s ease-in-out",
                 zIndex: 1000,
                 padding: "20px",
                 display: "flex",
                 flexDirection: "column",
                 boxShadow: "-5px 0 15px rgba(0,0,0,0.2)",
-                borderLeft: "1px solid rgba(255, 255, 255, 1)",
+                borderRadius: "12px",
+                border: "1px solid #4e525a",
                 opacity: "0.9"
             }}>
                 <button
