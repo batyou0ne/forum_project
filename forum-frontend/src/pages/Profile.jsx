@@ -52,7 +52,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                         left: 0,
                         width: "100%",
                         height: "100%",
-                        backgroundColor: "rgba(0,0,0,0.5)",
+                        backgroundColor: "rgba(174, 173, 173, 0.5)",
                         zIndex: 999,
                         cursor: "pointer"
                     }}
@@ -67,7 +67,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 width: "20%",
                 minWidth: "300px",
                 height: "100vh",
-                backgroundColor: "hsla(263, 74%, 89%, 0.63)",
+                backgroundColor: "hsla(265, 75%, 94%, 0.78)",
                 backdropFilter: "blur(15px)",
                 color: "#e0e0e0",
                 transform: isOpen ? "translateX(0)" : "translateX(100%)",
@@ -76,6 +76,9 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 padding: "20px",
                 display: "flex",
                 flexDirection: "column",
+                boxShadow: "-5px 0 15px rgba(0,0,0,0.2)",
+                borderLeft: "1px solid rgba(255, 255, 255, 0.2)",
+                opacity: "0.5"
             }}>
                 <button
                     onClick={onClose}
