@@ -51,7 +51,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 width: "20%",
                 minWidth: "300px",
                 height: "100vh",
-                backgroundColor: "hsla(265, 75%, 94%, 0.78)",
+                backgroundColor: "hsla(0, 0%, 0%, 0.78)",
                 backdropFilter: "blur(15px)",
                 color: "#e0e0e0",
                 transform: isOpen ? "translateX(0)" : "translateX(100%)",
