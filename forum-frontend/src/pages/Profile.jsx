@@ -42,22 +42,6 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
 
     return (
         <>
-            {/* Backdrop */}
-            {isOpen && (
-                <div
-                    onClick={onClose}
-                    style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "rgba(174, 173, 173, 0.5)",
-                        zIndex: 999,
-                        cursor: "pointer"
-                    }}
-                />
-            )}
 
             {/* Sidebar */}
             <div style={{
@@ -78,7 +62,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 flexDirection: "column",
                 boxShadow: "-5px 0 15px rgba(0,0,0,0.2)",
                 borderLeft: "1px solid rgba(255, 255, 255, 0.2)",
-                opacity: "0.5"
+                opacity: "0.9"
             }}>
                 <button
                     onClick={onClose}
