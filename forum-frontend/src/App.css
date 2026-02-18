@@ -143,11 +143,12 @@ span {
 
 
 
-.post-card h3 {
-  margin: 0 0 0.6rem;
+.post-card h3 a {
+  color: #ffffff;
 }
 
 .post-card p {
+  color: #ffffff;
   line-height: 1.55;
   margin: 0;
 }
