@@ -61,7 +61,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 display: "flex",
                 flexDirection: "column",
                 boxShadow: "-5px 0 15px rgba(0,0,0,0.2)",
-                borderLeft: "1px solid rgba(255, 255, 255, 0.2)",
+                borderLeft: "1px solid rgba(255, 255, 255, 1)",
                 opacity: "0.9"
             }}>
                 <button

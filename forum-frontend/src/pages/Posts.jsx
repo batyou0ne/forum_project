@@ -54,23 +54,23 @@ function Posts() {
                     <p>{post.content.substring(0, 500)}</p>
                 </div>
             ))}
-            <div style={{ marginTop: 20 }}>
+            <div style={{ marginTop: 20, display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
                 <button
                     onClick={() => setPage(page - 1)}
                     disabled={page === 1}
                 >
-                    Previous
+                    &lt; Önceki
                 </button>
 
-                <span style={{ margin: "0 10px" }}>
-                    Page {page} / {totalPages}
+                <span style={{ margin: "0 10px", fontWeight: "bold" }}>
+                    Sayfa {page} / {totalPages}
                 </span>
 
                 <button
                     onClick={() => setPage(page + 1)}
                     disabled={page === totalPages}
                 >
-                    Next
+                    Sonraki &gt;
                 </button>
             </div>
 
