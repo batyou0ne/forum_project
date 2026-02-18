@@ -17,9 +17,14 @@ exports.getUserProfile = async (req, res) => {
 
         const user = users[0];
 
+        const [posts] = await db.query(
+            "SELECT id, title, content, created_at FROM posts WHERE user_id = ? ORDER BY created_at DESC",
+            [userId]
+        );
+
         res.status(200).json({
             userInfo: user,
-            userPosts: []
+            userPosts: posts
         });
 
     } catch (error) {
