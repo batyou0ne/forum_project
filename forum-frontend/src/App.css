@@ -83,30 +83,6 @@ nav a:hover {
   background: rgba(79, 70, 229, 0.1);
 }
 
-nav button {
-  margin-left: 0;
-  background: transparent;
-  /* Match link background */
-  border: none;
-  color: var(--text-muted);
-  font-weight: 600;
-  /* Match link font weight */
-  padding: 0.45rem 0.7rem;
-  /* Match link padding */
-  font-size: 1rem;
-  /* Match link font size (inherited usually, but standardizing) */
-  font-family: inherit;
-  /* Ensure font matches */
-  cursor: pointer;
-}
-
-nav button:hover {
-  color: var(--primary);
-  background: rgba(79, 70, 229, 0.1);
-  /* Match link hover */
-  transform: none;
-  /* Reset global button transform if needed, or keep for effect */
-}
 
 
 
