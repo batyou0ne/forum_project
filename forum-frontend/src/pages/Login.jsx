@@ -52,14 +52,17 @@ function Login({ onLogin }) {
           className="custom-class"
         />
 
-        <button class="cta">
-          <span>Login</span>
-          <svg width="15px" height="10px" viewBox="0 0 13 10">
-            <path d="M1,5 L11,5"></path>
-            <polyline points="8 1 12 5 8 9"></polyline>
-          </svg>
-        </button>
-
+        <SplitText
+          text="Login"
+          tag="h2"
+          className=""
+          delay={50}
+          duration={1.2}
+          ease="circ.out"
+          splitType="chars,words"
+          from={{ opacity: 0, y: 30 }}
+          to={{ opacity: 1, y: 0 }}
+        />
 
         <input
           type="email"
@@ -75,7 +78,13 @@ function Login({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="submit">Login</button>
+        <button class="cta">
+          <span>Login</span>
+          <svg width="15px" height="10px" viewBox="0 0 13 10">
+            <path d="M1,5 L11,5"></path>
+            <polyline points="8 1 12 5 8 9"></polyline>
+          </svg>
+        </button>
         <p style={{ marginTop: "15px", textAlign: "center" }}>
           Hesabın yok mu? <Link to="/register">Hemen Kayıt Ol</Link>
         </p>
