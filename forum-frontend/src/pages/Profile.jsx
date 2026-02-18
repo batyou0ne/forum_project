@@ -67,7 +67,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 width: "20%",
                 minWidth: "300px",
                 height: "100vh",
-                backgroundColor: "rgba(255, 255, 255, 0.1)", // Glass effect
+                backgroundColor: "hsla(263, 74%, 89%, 0.63)",
                 backdropFilter: "blur(15px)",
                 color: "#e0e0e0",
                 transform: isOpen ? "translateX(0)" : "translateX(100%)",
@@ -76,8 +76,6 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 padding: "20px",
                 display: "flex",
                 flexDirection: "column",
-                boxShadow: "-5px 0 15px rgba(0,0,0,0.2)",
-                borderLeft: "1px solid rgba(255, 255, 255, 0.2)"
             }}>
                 <button
                     onClick={onClose}
