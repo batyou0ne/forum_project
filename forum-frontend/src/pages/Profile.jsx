@@ -151,8 +151,8 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                                     {userPosts.length > 0 ? (
                                         userPosts.map((post) => (
                                             <div
-                                                key={post._id}
-                                                onClick={() => { navigate(`/posts/${post._id}`); onClose(); }}
+                                                key={post.id}
+                                                onClick={() => { navigate(`/posts/${post.id}`); onClose(); }}
                                                 style={{
                                                     padding: "10px",
                                                     borderBottom: "1px solid rgba(255,255,255,0.1)",
