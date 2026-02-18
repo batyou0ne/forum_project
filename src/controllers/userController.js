@@ -22,8 +22,20 @@ exports.getUserProfile = async (req, res) => {
             [userId]
         );
 
+        const [[{ followerCount }]] = await db.query(
+            "SELECT COUNT(*) as followerCount FROM follows WHERE following_id = ?", [userId]
+        );
+
+        const [[{ followingCount }]] = await db.query(
+            "SELECT COUNT(*) as followingCount FROM follows WHERE follower_id = ?", [userId]
+        );
+
         res.status(200).json({
-            userInfo: user,
+            userInfo: {
+                ...user,
+                followerCount,
+                followingCount
+            },
             userPosts: posts
         });
 

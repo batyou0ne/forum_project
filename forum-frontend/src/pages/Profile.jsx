@@ -117,7 +117,18 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                                 {userInfo.username?.charAt(0).toUpperCase()}
                             </div>
                             <h3 style={{ fontSize: "1.5rem", textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}>@{userInfo.username}</h3>
-                            <p style={{ opacity: 0.9, fontSize: "0.9rem" }}>{userInfo.email}</p>
+                            <p style={{ opacity: 0.9, fontSize: "0.9rem", marginBottom: "15px" }}>{userInfo.email}</p>
+
+                            <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginBottom: "20px" }}>
+                                <div style={{ textAlign: "center" }}>
+                                    <span style={{ display: "block", fontSize: "1.2rem", fontWeight: "bold", color: "#fff" }}>{userInfo.followerCount || 0}</span>
+                                    <span style={{ fontSize: "0.75rem", color: "#9ca3af", textTransform: "uppercase" }}>Takipçi</span>
+                                </div>
+                                <div style={{ textAlign: "center" }}>
+                                    <span style={{ display: "block", fontSize: "1.2rem", fontWeight: "bold", color: "#fff" }}>{userInfo.followingCount || 0}</span>
+                                    <span style={{ fontSize: "0.75rem", color: "#9ca3af", textTransform: "uppercase" }}>Takip</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div style={{ flex: 1, overflowY: "auto" }}>

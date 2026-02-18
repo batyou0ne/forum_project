@@ -265,19 +265,9 @@ function PostDetail() {
                     {currentUser && currentUser.id !== post.user_id && (
                         <button
                             onClick={handleFollow}
-                            style={{
-                                padding: "4px 14px",
-                                background: isFollowing ? "transparent" : "#f5c518",
-                                color: isFollowing ? "#ccc" : "#000",
-                                border: `1px solid ${isFollowing ? "#4e525a" : "#f5c518"}`,
-                                borderRadius: "0",
-                                cursor: "pointer",
-                                fontSize: "0.8rem",
-                                fontWeight: "600",
-                                transition: "all 0.2s ease"
-                            }}
+                            className={`follow-btn ${isFollowing ? 'following' : 'not-following'}`}
                         >
-                            {isFollowing ? "Takibi Bırak" : "Takip Et"}
+                            {isFollowing ? "Takip Edildi" : "Takip Et"}
                         </button>
                     )}
                 </p>

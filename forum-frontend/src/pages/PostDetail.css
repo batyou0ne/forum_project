@@ -111,3 +111,70 @@
     font-size: 0.9em;
     margin-bottom: 4px;
 }
+
+/* Takip Et butonu */
+.follow-btn {
+    position: relative;
+    display: inline-block;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 0;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    z-index: 0;
+}
+
+.follow-btn.not-following {
+    background: transparent;
+    color: #f5c518;
+    border: 1px solid #f5c518;
+}
+
+.follow-btn.following {
+    background: transparent;
+    color: #9ca3af;
+    border: 1px solid #4e525a;
+}
+
+/* Soldan gelen sarı */
+.follow-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #f5c518;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+/* Sağdan gelen sarı */
+.follow-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #f5c518;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.follow-btn:hover::before {
+    transform: translateX(0);
+}
+
+.follow-btn:hover::after {
+    transform: translateX(0);
+}
+
+.follow-btn:hover {
+    color: #000;
+    border-color: #f5c518;
+}
