@@ -300,7 +300,7 @@ hr {
   left: 0;
   display: block;
   border-radius: 50px;
-  background: #b1dae7;
+  background: rgba(79, 70, 229, 0.1);
   width: 45px;
   height: 45px;
   transition: all 0.3s ease;
