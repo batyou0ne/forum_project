@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API_URL from "../config";
+import './PostDetail.css';
 
 const getUserFromToken = () => {
     const token = localStorage.getItem("token");
@@ -219,46 +220,30 @@ function PostDetail() {
 
     const canDelete = currentUser && (currentUser.id == post.user_id || currentUser.role === 'admin');
 
+    // ... (imports remain)
+
+    // ...
+
     return (
         <div>
             <h2>{post.title}</h2>
             <p>{post.content}</p>
-            <p><strong>Yazar:</strong> {post.username}</p>
-            <p><small>{new Date(post.created_at).toLocaleDateString()}</small></p>
+            <div className="post-meta">
+                <p><strong>Yazar:</strong> {post.username}</p>
+                <p><small>{new Date(post.created_at).toLocaleDateString()}</small></p>
+            </div>
 
-            <div className="reaction-buttons" style={{ display: 'flex', gap: '15px', marginTop: '15px' }}>
+            <div className="reaction-container">
                 <button
                     onClick={() => handleReaction(post.id, 'like')}
-                    style={{
-                        backgroundColor: '#1f2937',
-                        color: '#4ade80',
-                        border: '1px solid #4ade80',
-                        padding: '8px 16px',
-                        borderRadius: '8px',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        fontWeight: 'bold'
-                    }}
+                    className="reaction-btn like"
                 >
                     <span>👍</span>{likeCount}
                 </button>
 
                 <button
                     onClick={() => handleReaction(post.id, 'dislike')}
-                    style={{
-                        backgroundColor: '#1f2937',
-                        color: '#f87171',
-                        border: '1px solid #f87171',
-                        padding: '8px 16px',
-                        borderRadius: '8px',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        fontWeight: 'bold'
-                    }}
+                    className="reaction-btn dislike"
                 >
                     <span>👎</span> {dislikeCount}
                 </button>
@@ -267,17 +252,16 @@ function PostDetail() {
             <hr />
 
             {/* Comments Section */}
-            <div style={{ marginTop: '30px' }}>
+            <div className="comment-section">
                 <h3>Yorumlar</h3>
 
                 {currentUser ? (
-                    <form onSubmit={handleAddComment} style={{ marginBottom: '20px' }}>
+                    <form onSubmit={handleAddComment} className="comment-form">
                         <textarea
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                             placeholder="Bir yorum yaz..."
                             rows="3"
-                            style={{ width: '100%', marginBottom: '10px' }}
                         />
                         <button type="submit">Gönder</button>
                     </form>
@@ -290,20 +274,14 @@ function PostDetail() {
                         <p>Henüz yorum yok. İlk yorumu sen yap!</p>
                     ) : (
                         comments.map(comment => (
-                            <div key={comment.id} style={{
-                                backgroundColor: '#1f2937',
-                                padding: '15px',
-                                borderRadius: '10px',
-                                marginBottom: '10px',
-                                border: '1px solid #374151'
-                            }}>
-                                <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#60a5fa' }}>
+                            <div key={comment.id} className="comment-card">
+                                <p className="comment-header">
                                     {comment.username || `Kullanıcı ${comment.user_id}`}
-                                    <span style={{ fontSize: '0.8em', color: '#9ca3af', marginLeft: '10px', fontWeight: 'normal' }}>
+                                    <span className="comment-date">
                                         {new Date(comment.created_at).toLocaleDateString()}
                                     </span>
                                 </p>
-                                <p style={{ margin: 0 }}>{comment.content}</p>
+                                <p className="comment-content">{comment.content}</p>
                             </div>
                         ))
                     )}

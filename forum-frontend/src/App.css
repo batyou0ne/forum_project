@@ -1,15 +1,15 @@
 :root {
-  --bg-main: #0b1020;
-  --bg-surface: #111827;
-  --bg-surface-soft: #0f172a;
-  --border-color: #1f2937;
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
+  --bg-main: #f3f4f6;
+  --bg-surface: #ffffff;
+  --bg-surface-soft: #f9fafb;
+  --border-color: #e5e7eb;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
   --danger: #ef4444;
   --danger-hover: #dc2626;
-  --text-main: #e5e7eb;
-  --text-muted: #9ca3af;
-  --shadow: 0 16px 32px rgba(2, 6, 23, 0.35);
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 * {
@@ -19,23 +19,20 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 15% -10%, rgba(99, 102, 241, 0.18), transparent 40%),
-    radial-gradient(circle at 85% 10%, rgba(56, 189, 248, 0.12), transparent 35%),
-    var(--bg-main);
+  background-color: var(--bg-main);
   color: var(--text-main);
   font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 a {
-  color: #a5b4fc;
+  color: var(--primary);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a:hover {
-  color: #c7d2fe;
+  color: var(--primary-hover);
 }
 
 .container {
@@ -63,8 +60,9 @@ nav {
   /* Horizontal padding from edges */
   margin: 0 !important;
 
-  background: transparent !important;
-  border: none;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
   border-radius: 0;
   box-shadow: none;
 
@@ -81,8 +79,8 @@ nav a {
 }
 
 nav a:hover {
-  color: #eef2ff;
-  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+  background: rgba(79, 70, 229, 0.1);
 }
 
 nav button {
@@ -103,8 +101,8 @@ nav button {
 }
 
 nav button:hover {
-  color: #eef2ff;
-  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+  background: rgba(79, 70, 229, 0.1);
   /* Match link hover */
   transform: none;
   /* Reset global button transform if needed, or keep for effect */
@@ -115,12 +113,12 @@ nav button:hover {
 h2 {
   margin: 0 0 1rem;
   font-size: 1.55rem;
-  color: #f8fafc;
+  color: var(--text-main);
 }
 
 form,
 .card {
-  background: linear-gradient(165deg, rgba(17, 24, 39, 0.95), rgba(15, 23, 42, 0.92));
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 1.3rem;
@@ -147,9 +145,9 @@ textarea {
   margin-top: 0.35rem;
   margin-bottom: 0.85rem;
   border-radius: 10px;
-  border: 1px solid #334155;
+  border: 1px solid var(--border-color);
   background: var(--bg-surface-soft);
-  color: #f8fafc;
+  color: var(--text-main);
   font-size: 0.98rem;
 }
 
