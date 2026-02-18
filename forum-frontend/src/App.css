@@ -60,7 +60,7 @@ nav {
   /* Horizontal padding from edges */
   margin: 0 !important;
 
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(0, 0, 0, 0.8) !important;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   border-radius: 0;
