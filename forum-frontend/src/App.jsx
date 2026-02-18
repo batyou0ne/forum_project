@@ -9,94 +9,55 @@ import Profile from "./pages/Profile";
 
 
 
-import DotGrid from './components/DotGrid';
-
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setIsProfileOpen(false);
-  };
-
-  return (
-    <>
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: -1,
-        pointerEvents: "none"
-      }}>
-        <DotGrid
-          dotSize={5}
-          gap={25}
-          baseColor="#cbd5e1"
-          activeColor="#4f46e5"
-          proximity={120}
-          shockRadius={250}
-          shockStrength={5}
-          resistance={750}
-          returnDuration={1.5}
-        />
-      </div>
 
 
-      {isLoggedIn && (
-        <nav>
-          <div>
-            <Link to="/">Anasayfa</Link>
-            <Link to="/create">Yeni Gönderi Paylaş</Link>
-          </div>
-          <button
-            onClick={() => setIsProfileOpen(true)}
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              backgroundColor: "#4f46e5",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "1.2rem",
-              fontWeight: "bold"
-            }}
-          >
-            P
-          </button>
-        </nav>
-      )}
 
-      <Profile
-        isOpen={isProfileOpen}
-        onClose={() => setIsProfileOpen(false)}
-        onLogout={handleLogout}
-      />
+return (
+  <>
+    {isLoggedIn && (
+      <nav>
+        <div>
+          <Link to="/">Anasayfa</Link>
+          <Link to="/create">Yeni Gönderi Paylaş</Link>
+        </div>
+        <button
+          onClick={() => setIsProfileOpen(true)}
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            backgroundColor: "#4f46e5",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1.2rem",
+            fontWeight: "bold"
+          }}
+        >
+          P
+        </button>
+      </nav>
+    )}
 
-      <div className="container" style={{ position: "relative", zIndex: 10 }}>
-        <Routes>
-          <Route path="/" element={isLoggedIn ? <Posts /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/create" element={isLoggedIn ? <CreatePost /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
-          <Route path="/posts/:id" element={<PostDetail />} />
-        </Routes>
-      </div>
-    </>
-  );
+    <Profile
+      isOpen={isProfileOpen}
+      onClose={() => setIsProfileOpen(false)}
+      onLogout={handleLogout}
+    />
+
+    <div className="container" style={{ position: "relative", zIndex: 10 }}>
+      <Routes>
+        <Route path="/" element={isLoggedIn ? <Posts /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/create" element={isLoggedIn ? <CreatePost /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
+        <Route path="/posts/:id" element={<PostDetail />} />
+      </Routes>
+    </div>
+  </>
+);
 }
 
 export default App;
