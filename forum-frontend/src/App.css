@@ -43,9 +43,9 @@ a:hover {
 
 nav {
   position: fixed;
-  top: 5px;
-  left: 5px;
-  right: 5px;
+  top: 16px;
+  left: 16px;
+  right: 16px;
   width: auto;
   z-index: 100;
 
@@ -58,9 +58,8 @@ nav {
 
   background: #000 !important;
   backdrop-filter: blur(10px);
-  border: none;
-  border-bottom: 1px solid #4e525a;
-  border-radius: 0;
+  border: 1px solid #4e525a;
+  border-radius: 12px;
   box-shadow: 0 2px 16px rgba(245, 197, 24, 0.15);
 
   pointer-events: auto;
