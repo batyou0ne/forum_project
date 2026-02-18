@@ -3,8 +3,8 @@
   --bg-surface: #000000;
   --bg-surface-soft: #1a1a1a;
   --border-color: #e6e6e6;
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
+  --primary: #f5c518;
+  --primary-hover: #e6b800;
   --danger: #ef4444;
   --danger-hover: #dc2626;
   --text-main: #ffffff;
@@ -45,30 +45,42 @@ a:hover {
 
 nav {
   position: fixed;
-  /* Fix to viewport */
   top: 0;
   left: 0;
   width: 100%;
   z-index: 100;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
 
   padding: 1.5rem 2rem !important;
-  /* Horizontal padding from edges */
   margin: 0 !important;
 
   background: rgba(0, 0, 0, 0.8) !important;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 2px solid #f5c518;
   border-radius: 0;
   box-shadow: none;
 
-  /* Make sure interaction is possible */
   pointer-events: auto;
 }
+
+nav>div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+nav>.nav-search-box {
+  justify-self: center;
+}
+
+nav>button:last-child {
+  justify-self: flex-end;
+}
+
 
 nav a {
   color: var(--text-muted);
@@ -80,7 +92,7 @@ nav a {
 
 nav a:hover {
   color: var(--primary);
-  background: rgba(79, 70, 229, 0.1);
+  background: rgba(245, 197, 24, 0.12);
 }
 
 /* Nav Search Bar */
@@ -192,7 +204,7 @@ input:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
+  box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.2);
 }
 
 label,
@@ -275,7 +287,6 @@ hr {
   outline: none;
   border-bottom-color: var(--primary) !important;
   box-shadow: none !important;
-  /* Remove the default focus shadow/ring */
 }
 
 .auth-page input::placeholder {
@@ -371,7 +382,7 @@ hr {
   left: 0;
   display: block;
   border-radius: 50px;
-  background: rgba(79, 70, 229, 0.1);
+  background: rgba(245, 197, 24, 0.15);
   width: 45px;
   height: 45px;
   transition: all 0.3s ease;
@@ -401,7 +412,7 @@ hr {
 
 .cta:hover:before {
   width: 100%;
-  background: rgba(79, 70, 229, 0.1);
+  background: rgba(245, 197, 24, 0.15);
 }
 
 .cta:hover svg {

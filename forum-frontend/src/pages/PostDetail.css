@@ -58,7 +58,9 @@
 }
 
 .comment-form button[type="submit"]:hover {
-    background-color: #1a1a1a;
+    background-color: #f5c518;
+    color: #000;
+    border-color: #f5c518;
 }
 
 .comment-form textarea {
