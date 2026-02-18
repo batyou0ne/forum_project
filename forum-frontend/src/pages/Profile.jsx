@@ -135,13 +135,28 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                     style={{
                         width: "100%",
                         padding: "12px",
-                        backgroundColor: "#ef4444",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "8px",
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        backdropFilter: "blur(10px)",
+                        WebkitBackdropFilter: "blur(10px)",
+                        color: "#333",
+                        border: "1px solid rgba(255, 255, 255, 0.3)",
+                        borderRadius: "12px",
                         cursor: "pointer",
                         fontSize: "1rem",
-                        marginTop: "auto"
+                        marginTop: "auto",
+                        boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+                        transition: "all 0.3s ease",
+                        fontWeight: "500"
+                    }}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
+                        e.currentTarget.style.transform = "translateY(-2px)";
+                        e.currentTarget.style.boxShadow = "0 6px 20px rgba(0, 0, 0, 0.15)";
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)";
                     }}
                 >
                     Çıkış Yap
