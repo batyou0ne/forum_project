@@ -2,7 +2,7 @@
   --bg-main: #000000;
   --bg-surface: #000000;
   --bg-surface-soft: #1a1a1a;
-  --border-color: #333333;
+  --border-color: #e6e6e6;
   --primary: #4f46e5;
   --primary-hover: #4338ca;
   --danger: #ef4444;
@@ -62,7 +62,7 @@ nav {
 
   background: rgba(0, 0, 0, 0.8) !important;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #e6e6e6;
   border-radius: 0;
   box-shadow: none;
 
@@ -105,7 +105,7 @@ form,
 .post-card {
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #e6e6e6;
   /* Separator line */
   border-radius: 0;
   padding: 1.5rem 0;
