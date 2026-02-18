@@ -88,7 +88,7 @@ function PostDetail() {
                 // Takip durumunu kontrol et
                 if (user && user.id !== data.user_id) {
                     try {
-                        const followRes = await fetch(`${API_URL}/api/users/${data.user_id}/followers`);
+                        const followRes = await fetch(`${API_URL}/users/${data.user_id}/followers`);
                         if (followRes.ok) {
                             const followers = await followRes.json();
                             setIsFollowing(followers.some(f => f.id === user.id));
@@ -238,7 +238,7 @@ function PostDetail() {
         const token = localStorage.getItem("token");
         if (!token) return;
         try {
-            const res = await fetch(`${API_URL}/api/users/${post.user_id}/follow`, {
+            const res = await fetch(`${API_URL}/users/${post.user_id}/follow`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` }
             });
