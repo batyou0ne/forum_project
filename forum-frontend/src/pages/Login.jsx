@@ -52,17 +52,14 @@ function Login({ onLogin }) {
           className="custom-class"
         />
 
-        <SplitText
-          text="Login"
-          tag="h2"
-          className=""
-          delay={50}
-          duration={1.2}
-          ease="circ.out"
-          splitType="chars,words"
-          from={{ opacity: 0, y: 30 }}
-          to={{ opacity: 1, y: 0 }}
-        />
+        <button class="cta">
+          <span>Login</span>
+          <svg width="15px" height="10px" viewBox="0 0 13 10">
+            <path d="M1,5 L11,5"></path>
+            <polyline points="8 1 12 5 8 9"></polyline>
+          </svg>
+        </button>
+
 
         <input
           type="email"
