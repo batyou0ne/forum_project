@@ -28,31 +28,50 @@ exports.getAllPosts = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
     const offset = (page - 1) * limit;
+    const search = req.query.search ? `%${req.query.search}%` : null;
 
-    const sql =
-      `
-      SELECT posts.id, posts.title, posts.content, posts.created_at, users.username,
-      (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
-      (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
-      FROM posts
-      JOIN users ON posts.user_id = users.id
-      ORDER BY posts.created_at DESC
-      LIMIT ? OFFSET ?;
-    `
+    let sql, countSql, params, countParams;
 
-    const [posts] = await db.query(sql, [limit, offset]);
+    if (search) {
+      sql = `
+        SELECT posts.id, posts.title, posts.content, posts.created_at, users.username,
+        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
+        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
+        FROM posts
+        JOIN users ON posts.user_id = users.id
+        WHERE posts.title LIKE ? OR posts.content LIKE ?
+        ORDER BY posts.created_at DESC
+        LIMIT ? OFFSET ?;
+      `;
+      params = [search, search, limit, offset];
+      countSql = `SELECT COUNT(*) as total FROM posts WHERE title LIKE ? OR content LIKE ?`;
+      countParams = [search, search];
+    } else {
+      sql = `
+        SELECT posts.id, posts.title, posts.content, posts.created_at, users.username,
+        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
+        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
+        FROM posts
+        JOIN users ON posts.user_id = users.id
+        ORDER BY posts.created_at DESC
+        LIMIT ? OFFSET ?;
+      `;
+      params = [limit, offset];
+      countSql = `SELECT COUNT(*) as total FROM posts`;
+      countParams = [];
+    }
 
-    const [countResult] = await db.query(`SELECT COUNT(*) as total FROM posts`);
+    const [posts] = await db.query(sql, params);
+    const [countResult] = await db.query(countSql, countParams);
 
     const totalPosts = countResult[0].total;
-    const totalPages = Math.ceil(totalPosts / limit);
+    const totalPages = Math.ceil(totalPosts / limit) || 1;
 
-    return res.json({ page, totalPages, totalPosts, posts })
+    return res.json({ page, totalPages, totalPosts, posts });
 
   } catch (err) {
     console.error("GET POSTS ERROR:", err);
     return res.status(500).json({ message: err.message });
-
   }
 };
 

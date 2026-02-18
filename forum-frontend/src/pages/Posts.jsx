@@ -1,31 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import API_URL from "../config";
-
+import "./Posts.css";
 
 function Posts() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
+    const [searchInput, setSearchInput] = useState("");
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const inputRef = useRef(null);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get("page") || "1", 10);
+    const search = searchParams.get("search") || "";
+
+    useEffect(() => {
+        setSearchInput(search);
+    }, []);
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 setLoading(true);
-
                 const token = localStorage.getItem("token");
 
-                const response = await fetch(`${API_URL}/posts?page=${page}&limit=5`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                const url = new URL(`${API_URL}/posts`);
+                url.searchParams.set("page", page);
+                url.searchParams.set("limit", 5);
+                if (search) url.searchParams.set("search", search);
+
+                const response = await fetch(url.toString(), {
+                    headers: { Authorization: `Bearer ${token}` },
                 });
 
                 const data = await response.json();
-
                 setPosts(data.posts || []);
                 setTotalPages(data.totalPages);
             } catch (error) {
@@ -36,30 +45,80 @@ function Posts() {
         };
 
         fetchPosts();
-    }, [page]);
+    }, [page, search]);
 
     const goToPage = (newPage) => {
-        setSearchParams({ page: newPage });
+        const params = { page: newPage };
+        if (search) params.search = search;
+        setSearchParams(params);
     };
 
-    if (loading) {
-        return <p>Loading posts...</p>;
-    }
+    const handleSearch = () => {
+        const params = { page: 1 };
+        if (searchInput.trim()) params.search = searchInput.trim();
+        setSearchParams(params);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") handleSearch();
+    };
 
     return (
         <div>
+            {/* Search Bar */}
+            <div className="search-wrapper">
+                <div
+                    className={`search-box ${isSearchFocused ? "focused" : ""}`}
+                    onMouseEnter={() => setIsSearchFocused(true)}
+                    onMouseLeave={() => { if (document.activeElement !== inputRef.current) setIsSearchFocused(false); }}
+                >
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        className="search-input"
+                        placeholder="Post ara..."
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onFocus={() => setIsSearchFocused(true)}
+                        onBlur={() => setIsSearchFocused(false)}
+                    />
+                    <button className="search-btn" onClick={handleSearch} tabIndex={-1}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                    </button>
+                </div>
+                {search && (
+                    <p className="search-info">
+                        "<strong>{search}</strong>" için sonuçlar
+                        <button
+                            className="search-clear"
+                            onClick={() => { setSearchInput(""); setSearchParams({ page: 1 }); }}
+                        >
+                            ✕ Temizle
+                        </button>
+                    </p>
+                )}
+            </div>
+
             <h2>Posts</h2>
 
-            {posts.length === 0 && <p>No posts found</p>}
-
-            {posts.map((post) => (
-                <div key={post.id} className="post-card">
-                    <h3>
-                        <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                    </h3>
-                    <p>{post.content.substring(0, 500)}</p>
-                </div>
-            ))}
+            {loading ? (
+                <p>Yükleniyor...</p>
+            ) : posts.length === 0 ? (
+                <p>Sonuç bulunamadı.</p>
+            ) : (
+                posts.map((post) => (
+                    <div key={post.id} className="post-card">
+                        <h3>
+                            <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                        </h3>
+                        <p>{post.content.substring(0, 500)}</p>
+                    </div>
+                ))
+            )}
 
             <div style={{ marginTop: 20, display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
                 <button
@@ -100,7 +159,6 @@ function Posts() {
                     Sonraki &gt;
                 </button>
             </div>
-
         </div>
     );
 }
