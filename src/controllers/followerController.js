@@ -28,8 +28,8 @@ exports.getFollowers = async (req, res) => {
     const [rows] = await db.query(
         `SELECT users.id, users.username
          FROM follows
-         JOIN users ON follows.following_id = users.id
-         WHERE follows.follower_id = ?
+         JOIN users ON follows.follower_id = users.id
+         WHERE follows.following_id = ?
         `, [userId]);
 
     res.json(rows);
@@ -40,9 +40,9 @@ exports.getFollowing = async (req, res) => {
 
     const [rows] = await db.query(
         `SELECT users.id, users.username
-     FROM follows
-     JOIN users ON follows.following_id = users.id
-     WHERE follows.follower_id = ?`,
+         FROM follows
+         JOIN users ON follows.following_id = users.id
+         WHERE follows.follower_id = ?`,
         [userId]
     );
     res.json(rows);
