@@ -2,7 +2,7 @@
   --bg-main: #000000;
   --bg-surface: #000000;
   --bg-surface-soft: #1a1a1a;
-  --border-color: #e6e6e6;
+  --border-color: #6b7280;
   --primary: #f5c518;
   --primary-hover: #e6b800;
   --danger: #ef4444;
@@ -82,7 +82,7 @@ nav>button:last-child {
 
 
 nav a {
-  color: #f5c518;
+  color: #6b7280;
   font-weight: 600;
   margin-right: 0 !important;
   padding: 0.45rem 0.7rem;
