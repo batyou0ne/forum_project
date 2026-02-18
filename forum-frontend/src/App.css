@@ -2,7 +2,7 @@
   --bg-main: #000000;
   --bg-surface: #000000;
   --bg-surface-soft: #1a1a1a;
-  --border-color: #6b7280;
+  --border-color: #444952;
   --primary: #f5c518;
   --primary-hover: #e6b800;
   --danger: #ef4444;
@@ -390,7 +390,7 @@ hr {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #234567;
+  color: #676523;
 }
 
 .cta svg {
