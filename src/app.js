@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const userRoute = require("./routes/userRoute");
+const followRoute = require("./routes/followerRoute");
 
 app.use(cors({
     origin: '*',
@@ -16,5 +17,7 @@ app.use("/api/posts", require("./routes/postRoute"));
 app.use("/api/comments", require("./routes/commentRoute"));
 
 app.use("/api/users", userRoute);
+
+app.use("/api/users", followRoute)
 
 module.exports = app;

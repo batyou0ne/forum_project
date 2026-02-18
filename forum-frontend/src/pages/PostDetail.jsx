@@ -36,6 +36,9 @@ function PostDetail() {
     const [likeCount, setLikeCount] = useState(0);
     const [dislikeCount, setDislikeCount] = useState(0);
 
+    // State for follow
+    const [isFollowing, setIsFollowing] = useState(false);
+
     // State for comments
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
@@ -81,6 +84,17 @@ function PostDetail() {
                 setPost(data);
                 setLikeCount(data.like_count || 0);
                 setDislikeCount(data.dislike_count || 0);
+
+                // Takip durumunu kontrol et
+                if (user && user.id !== data.user_id) {
+                    try {
+                        const followRes = await fetch(`${API_URL}/api/users/${data.user_id}/followers`);
+                        if (followRes.ok) {
+                            const followers = await followRes.json();
+                            setIsFollowing(followers.some(f => f.id === user.id));
+                        }
+                    } catch (_) { }
+                }
 
                 // Fetch comments after post is loaded
                 fetchComments();
@@ -220,6 +234,23 @@ function PostDetail() {
 
     const canDelete = currentUser && (currentUser.id == post.user_id || currentUser.role === 'admin');
 
+    const handleFollow = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        try {
+            const res = await fetch(`${API_URL}/api/users/${post.user_id}/follow`, {
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setIsFollowing(data.following);
+            }
+        } catch (err) {
+            console.error("Takip hatası:", err);
+        }
+    };
+
     // ... (imports remain)
 
     // ...
@@ -229,7 +260,27 @@ function PostDetail() {
             <h2>{post.title}</h2>
             <p>{post.content}</p>
             <div className="post-meta">
-                <p><strong>Yazar:</strong> {post.username}</p>
+                <p style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <span><strong>Yazar:</strong> {post.username}</span>
+                    {currentUser && currentUser.id !== post.user_id && (
+                        <button
+                            onClick={handleFollow}
+                            style={{
+                                padding: "4px 14px",
+                                background: isFollowing ? "transparent" : "#f5c518",
+                                color: isFollowing ? "#ccc" : "#000",
+                                border: `1px solid ${isFollowing ? "#4e525a" : "#f5c518"}`,
+                                borderRadius: "0",
+                                cursor: "pointer",
+                                fontSize: "0.8rem",
+                                fontWeight: "600",
+                                transition: "all 0.2s ease"
+                            }}
+                        >
+                            {isFollowing ? "Takibi Bırak" : "Takip Et"}
+                        </button>
+                    )}
+                </p>
                 <p><small>{new Date(post.created_at).toLocaleDateString()}</small></p>
             </div>
 
