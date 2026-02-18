@@ -1,0 +1,56 @@
+.create-post-btn {
+    position: relative;
+    display: inline-block;
+    padding: 10px 28px;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #4e525a;
+    border-radius: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.35s ease;
+    z-index: 0;
+}
+
+/* Aşağıdan yükselen sarı */
+.create-post-btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #f5c518;
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+    z-index: -1;
+}
+
+/* Yukarıdan inen sarı */
+.create-post-btn::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #f5c518;
+    transform: translateY(-100%);
+    transition: transform 0.35s ease;
+    z-index: -1;
+}
+
+.create-post-btn:hover::before {
+    transform: translateY(0);
+}
+
+.create-post-btn:hover::after {
+    transform: translateY(0);
+}
+
+.create-post-btn:hover {
+    color: #000;
+    border-color: #f5c518;
+}

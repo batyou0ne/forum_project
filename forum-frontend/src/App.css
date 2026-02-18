@@ -388,9 +388,9 @@ hr {
   position: relative;
   font-family: "Ubuntu", sans-serif;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.05em;
-  color: #676523;
+  color: #ffffff;
 }
 
 .cta svg {
@@ -400,7 +400,7 @@ hr {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke: #234567;
+  stroke: #f5c518;
   stroke-width: 2;
   transform: translateX(-5px);
   transition: all 0.3s ease;

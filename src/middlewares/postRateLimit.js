@@ -28,7 +28,7 @@ module.exports = async (req, res, next) => {
 
         if (cooldownRows.length > 0) {
             return res.status(429).json({
-                message: "Çok hızlı! Her 2 dakikada bir post atabilirsiniz.",
+                message: "Yeni bir post oluşturmadan önce lütfen biraz bekleyin.",
             });
         }
 

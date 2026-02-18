@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API_URL from "../config";
+import "./createPost.css";
 
 function createPost() {
     const [title, setTitle] = useState("");
@@ -76,7 +77,7 @@ function createPost() {
                     />
                 </div>
 
-                <button type="submit" style={{ padding: "10px 20px" }}>
+                <button type="submit" className="create-post-btn">
                     Paylaş
                 </button>
 
