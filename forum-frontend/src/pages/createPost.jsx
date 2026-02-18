@@ -5,11 +5,13 @@ import API_URL from "../config";
 function createPost() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
         try {
             const token = localStorage.getItem("token");
@@ -28,17 +30,25 @@ function createPost() {
                 alert("Post başarıyla oluşturuldu!");
                 navigate("/");
             } else {
-                alert("Bir hata oluştu!")
+                const data = await response.json();
+                setError(data.message || "Bir hata oluştu!");
             }
 
 
         } catch (error) {
-            console.error("Hata: ", error)
+            console.error("Hata: ", error);
+            setError("Sunucuya bağlanılamadı.");
         }
     }
     return (
         <div>
             <h2>Yeni Gönderi Oluştur</h2>
+
+            {error && (
+                <p style={{ color: "#ef4444", marginBottom: "12px", fontWeight: 500 }}>
+                    ⚠️ {error}
+                </p>
+            )}
 
             {/* Form gönderilince handleSubmit çalışsın */}
             <form onSubmit={handleSubmit}>

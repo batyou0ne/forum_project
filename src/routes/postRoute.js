@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
 const auth = require("../middlewares/authMiddleware");
+const postRateLimit = require("../middlewares/postRateLimit");
 
 const likeController = require("../controllers/likeController");
 
-router.post("/", auth, postController.createPost);
+router.post("/", auth, postRateLimit, postController.createPost);
 router.get("/", postController.getAllPosts);
 router.get("/:id", postController.getPostById);
 router.delete("/:id", auth, postController.deletePost);
