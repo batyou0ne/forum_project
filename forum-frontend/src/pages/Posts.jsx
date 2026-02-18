@@ -58,6 +58,16 @@ function Posts() {
                 <button
                     onClick={() => setPage(page - 1)}
                     disabled={page === 1}
+                    style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        border: "1px solid white",
+                        borderRadius: "0",
+                        padding: "10px 20px",
+                        fontSize: "1.1rem",
+                        cursor: page === 1 ? "not-allowed" : "pointer",
+                        opacity: page === 1 ? 0.5 : 1
+                    }}
                 >
                     &lt; Önceki
                 </button>
@@ -69,6 +79,16 @@ function Posts() {
                 <button
                     onClick={() => setPage(page + 1)}
                     disabled={page === totalPages}
+                    style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        border: "1px solid white",
+                        borderRadius: "0",
+                        padding: "10px 20px",
+                        fontSize: "1.1rem",
+                        cursor: page === totalPages ? "not-allowed" : "pointer",
+                        opacity: page === totalPages ? 0.5 : 1
+                    }}
                 >
                     Sonraki &gt;
                 </button>

@@ -53,7 +53,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 height: "100vh",
                 backgroundColor: "hsla(0, 0%, 0%, 0.78)",
                 backdropFilter: "blur(15px)",
-                color: "#e0e0e0",
+                color: "#e6e6e6",
                 transform: isOpen ? "translateX(0)" : "translateX(100%)",
                 transition: "transform 0.3s ease-in-out",
                 zIndex: 1000,
