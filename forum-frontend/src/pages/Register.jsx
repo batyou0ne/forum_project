@@ -37,7 +37,7 @@ function Register() {
 
     return (
         <div className="auth-page">
-            <form onSubmit={handleRegister}>
+            <form onSubmit={handleSubmit}>
                 <h2>Aramıza Katıl ☁️</h2>
 
                 <div style={{ marginBottom: "15px" }}>
