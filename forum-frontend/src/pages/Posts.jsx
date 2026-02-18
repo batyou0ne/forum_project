@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import API_URL from "../config";
 import "./Posts.css";
@@ -7,17 +7,10 @@ function Posts() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
-    const [searchInput, setSearchInput] = useState("");
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
-    const inputRef = useRef(null);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get("page") || "1", 10);
     const search = searchParams.get("search") || "";
-
-    useEffect(() => {
-        setSearchInput(search);
-    }, []);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -53,55 +46,19 @@ function Posts() {
         setSearchParams(params);
     };
 
-    const handleSearch = () => {
-        const params = { page: 1 };
-        if (searchInput.trim()) params.search = searchInput.trim();
-        setSearchParams(params);
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.key === "Enter") handleSearch();
-    };
-
     return (
         <div>
-            {/* Search Bar */}
-            <div className="search-wrapper">
-                <div
-                    className={`search-box ${isSearchFocused ? "focused" : ""}`}
-                    onMouseEnter={() => setIsSearchFocused(true)}
-                    onMouseLeave={() => { if (document.activeElement !== inputRef.current) setIsSearchFocused(false); }}
-                >
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        className="search-input"
-                        placeholder="Post ara..."
-                        value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        onFocus={() => setIsSearchFocused(true)}
-                        onBlur={() => setIsSearchFocused(false)}
-                    />
-                    <button className="search-btn" onClick={handleSearch} tabIndex={-1}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="11" cy="11" r="8" />
-                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                        </svg>
+            {search && (
+                <div className="search-active-bar">
+                    <span>"<strong>{search}</strong>" için sonuçlar</span>
+                    <button
+                        className="search-clear"
+                        onClick={() => setSearchParams({ page: 1 })}
+                    >
+                        ✕ Temizle
                     </button>
                 </div>
-                {search && (
-                    <p className="search-info">
-                        "<strong>{search}</strong>" için sonuçlar
-                        <button
-                            className="search-clear"
-                            onClick={() => { setSearchInput(""); setSearchParams({ page: 1 }); }}
-                        >
-                            ✕ Temizle
-                        </button>
-                    </p>
-                )}
-            </div>
+            )}
 
             <h2>Posts</h2>
 
