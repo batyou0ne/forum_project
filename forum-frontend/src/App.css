@@ -330,7 +330,7 @@ hr {
 
 .cta:hover:before {
   width: 100%;
-  background: #b1dae7;
+  background: rgba(79, 70, 229, 0.1);
 }
 
 .cta:hover svg {
