@@ -15,7 +15,7 @@ exports.getUserProfile = async (req, res) => {
 
         res.status(200).json({
             userInfo: user,
-            userPosts: posts
+            userPosts: []
         });
 
     } catch (error) {

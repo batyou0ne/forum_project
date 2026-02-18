@@ -60,7 +60,8 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 width: "20%",
                 minWidth: "300px",
                 height: "100vh",
-                backgroundColor: "#1e1e1e", // Dark theme background
+                backgroundColor: "rgba(255, 255, 255, 0.1)", // Glass effect
+                backdropFilter: "blur(15px)",
                 color: "#e0e0e0",
                 transform: isOpen ? "translateX(0)" : "translateX(100%)",
                 transition: "transform 0.3s ease-in-out",
@@ -68,7 +69,8 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 padding: "20px",
                 display: "flex",
                 flexDirection: "column",
-                boxShadow: "-5px 0 15px rgba(0,0,0,0.5)"
+                boxShadow: "-5px 0 15px rgba(0,0,0,0.2)",
+                borderLeft: "1px solid rgba(255, 255, 255, 0.2)"
             }}>
                 <button
                     onClick={onClose}
@@ -89,23 +91,24 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                     <p>Yükleniyor...</p>
                 ) : userInfo ? (
                     <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                        <div style={{ textAlign: "center", marginBottom: "30px" }}>
+                        <div style={{ textAlign: "center", marginBottom: "30px", marginTop: "40px" }}>
                             <div style={{
-                                width: "80px",
-                                height: "80px",
+                                width: "100px",
+                                height: "100px",
                                 borderRadius: "50%",
-                                backgroundColor: "#4f46e5",
+                                backgroundColor: "rgba(79, 70, 229, 0.8)",
                                 color: "white",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                fontSize: "2rem",
-                                margin: "0 auto 15px"
+                                fontSize: "2.5rem",
+                                margin: "0 auto 15px",
+                                boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
                             }}>
                                 {userInfo.username?.charAt(0).toUpperCase()}
                             </div>
-                            <h3>@{userInfo.username}</h3>
-                            <p style={{ opacity: 0.7 }}>{userInfo.email}</p>
+                            <h3 style={{ fontSize: "1.5rem", textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}>@{userInfo.username}</h3>
+                            <p style={{ opacity: 0.9, fontSize: "0.9rem" }}>{userInfo.email}</p>
                         </div>
 
                         <div style={{ flex: 1, overflowY: "auto" }}>
