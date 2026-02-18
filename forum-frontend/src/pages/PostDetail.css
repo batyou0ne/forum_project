@@ -24,7 +24,7 @@
 }
 
 .reaction-btn.like:hover {
-    background-color: rgba(16, 185, 129, 0.1);
+    background-color: rgba(16, 185, 129, 0.2);
 }
 
 .reaction-btn.dislike {
@@ -34,7 +34,7 @@
 }
 
 .reaction-btn.dislike:hover {
-    background-color: rgba(239, 68, 68, 0.1);
+    background-color: rgba(239, 68, 68, 0.2);
 }
 
 .comment-section {
