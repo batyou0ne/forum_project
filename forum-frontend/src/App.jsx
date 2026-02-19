@@ -71,7 +71,6 @@ function App() {
 
   return (
     <>
-      {/* Orb arka planı - sadece login ekranında */}
       {!isLoggedIn && (
         <div style={{
           position: 'fixed',

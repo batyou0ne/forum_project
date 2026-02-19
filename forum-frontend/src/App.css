@@ -174,7 +174,7 @@ form,
   border: none;
   border-bottom: 1px solid #4e525a;
   border-radius: 0;
-  padding: 1.5rem 0;
+  padding: calc(1.5rem + 2px) 0;
   margin-bottom: 0;
   box-shadow: none;
 }
@@ -208,10 +208,12 @@ span {
 
 .post-card h3 a {
   color: #ffffff;
+  font-size: 1.25rem;
 }
 
 .post-card p {
   color: #ffffff;
+  font-size: 1.05rem;
   line-height: 1.55;
   margin: 0;
 }
