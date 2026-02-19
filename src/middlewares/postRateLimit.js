@@ -11,8 +11,9 @@ module.exports = async (req, res, next) => {
 
         if (banRows.length > 0 && banRows[0].banned_until) {
             const bannedUntil = new Date(banRows[0].banned_until);
-            if (bannedUntil > new Date()) {
-                const remaining = Math.ceil((bannedUntil - new Date()) / 60000);
+            const now = new Date();
+            if (bannedUntil > now) {
+                const remaining = Math.ceil((bannedUntil - now) / 60000);
                 return res.status(403).json({
                     message: `Spam nedeniyle yasaklandınız. ${remaining} dakika sonra tekrar deneyebilirsiniz.`,
                 });
@@ -20,18 +21,25 @@ module.exports = async (req, res, next) => {
         }
 
         const [cooldownRows] = await db.query(
-            "SELECT id FROM posts WHERE user_id = ? AND created_at > DATE_SUB(NOW(), INTERVAL 2 MINUTE) ORDER BY created_at DESC LIMIT 1",
+            "SELECT created_at FROM posts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
             [userId]
         );
 
         if (cooldownRows.length > 0) {
-            return res.status(429).json({
-                message: "Yeni bir post oluşturmadan önce lütfen biraz bekleyin.",
-            });
+            const lastPostTime = new Date(cooldownRows[0].created_at);
+            const now = new Date();
+            const diffMinutes = (now - lastPostTime) / 60000;
+
+            if (diffMinutes < 2) {
+                const waitSeconds = Math.ceil((2 - diffMinutes) * 60);
+                return res.status(429).json({
+                    message: `Yeni bir post oluşturmadan önce ${waitSeconds} saniye bekleyin.`,
+                });
+            }
         }
 
         const [spamRows] = await db.query(
-            "SELECT COUNT(*) AS count FROM posts WHERE user_id = ? AND created_at > DATE_SUB(NOW(), INTERVAL 10 MINUTE)",
+            "SELECT COUNT(*) AS count FROM posts WHERE user_id = ? AND created_at > DATE_SUB(NOW(), INTERVAL 12 MINUTE)",
             [userId]
         );
 
@@ -42,14 +50,13 @@ module.exports = async (req, res, next) => {
                 userId,
             ]);
             return res.status(403).json({
-                message:
-                    "10 dakika içinde çok fazla post attınız. 1 saatliğine yasaklandınız.",
+                message: "12 dakika içinde çok fazla post attınız. 1 saatliğine yasaklandınız.",
             });
         }
 
         next();
     } catch (err) {
         console.error("Rate limit hatası:", err);
-        return res.status(500).json({ message: "Sunucu hatası" });
+        return res.status(500).json({ message: "Rate limit kontrolü sırasında hata oluştu." });
     }
 };
