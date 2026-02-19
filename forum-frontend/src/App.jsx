@@ -71,24 +71,26 @@ function App() {
 
   return (
     <>
-      {/* Orb arka planı - sabit, tam ekran, en arkada */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        zIndex: 0,
-        pointerEvents: 'none',
-      }}>
-        <Orb
-          hoverIntensity={0.14}
-          rotateOnHover={false}
-          hue={206}
-          forceHoverState={false}
-          backgroundColor="#000000"
-        />
-      </div>
+      {/* Orb arka planı - sadece login ekranında */}
+      {!isLoggedIn && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}>
+          <Orb
+            hoverIntensity={0.14}
+            rotateOnHover={false}
+            hue={206}
+            forceHoverState={false}
+            backgroundColor="#000000"
+          />
+        </div>
+      )}
 
       {isLoggedIn && (
         <nav style={{ position: 'relative', zIndex: 20 }}>
