@@ -23,42 +23,42 @@ module.exports = async (req, res, next) => {
         }
 
         const [cooldownRows] = await db.query(
-            "SELECT created_at FROM posts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
+            "SELECT created_at FROM comments WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
             [userId]
         );
 
         if (cooldownRows.length > 0) {
-            const lastPostTime = new Date(cooldownRows[0].created_at);
+            const lastCommentTime = new Date(cooldownRows[0].created_at);
             const now = new Date();
-            const diffMinutes = (now - lastPostTime) / 60000;
+            const diffSeconds = (now - lastCommentTime) / 1000;
 
-            if (diffMinutes < 2) {
-                const waitSeconds = Math.ceil((2 - diffMinutes) * 60);
+            if (diffSeconds < 30) {
+                const waitSeconds = Math.ceil(30 - diffSeconds);
                 return res.status(429).json({
-                    message: `Yeni bir post oluşturmadan önce ${waitSeconds} saniye bekleyin.`,
+                    message: `Yeni bir yorum yapmadan önce ${waitSeconds} saniye bekleyin.`,
                 });
             }
         }
 
         const [spamRows] = await db.query(
-            "SELECT COUNT(*) AS count FROM posts WHERE user_id = ? AND created_at > DATE_SUB(NOW(), INTERVAL 12 MINUTE)",
+            "SELECT COUNT(*) AS count FROM comments WHERE user_id = ? AND created_at > DATE_SUB(NOW(), INTERVAL 5 MINUTE)",
             [userId]
         );
 
-        if (spamRows[0].count >= 4) {
+        if (spamRows[0].count >= 10) {
             const banUntil = new Date(Date.now() + 60 * 60 * 1000);
             await db.query("UPDATE users SET banned_until = ? WHERE id = ?", [
                 banUntil,
                 userId,
             ]);
             return res.status(403).json({
-                message: "12 dakika içinde çok fazla post attınız. 1 saatliğine yasaklandınız.",
+                message: "5 dakika içinde çok fazla yorum yaptınız. 1 saatliğine yasaklandınız.",
             });
         }
 
         next();
     } catch (err) {
-        console.error("Rate limit hatası:", err);
+        console.error("Comment rate limit hatası:", err);
         return res.status(500).json({ message: "Rate limit kontrolü sırasında hata oluştu." });
     }
 };
