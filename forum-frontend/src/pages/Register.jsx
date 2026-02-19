@@ -70,7 +70,13 @@ function Register() {
                     />
                 </div>
 
-                <button type="submit" style={{ width: "100%" }}>Kayıt Ol</button>
+                <button type="submit" className="cta" style={{ width: "100%" }}>
+                    <span>Kayıt Ol</span>
+                    <svg width="15px" height="10px" viewBox="0 0 13 10">
+                        <path d="M1,5 L11,5"></path>
+                        <polyline points="8 1 12 5 8 9"></polyline>
+                    </svg>
+                </button>
 
                 <p style={{ marginTop: "15px" }}>
                     Zaten hesabın var mı? <Link to="/">Giriş Yap</Link>
