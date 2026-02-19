@@ -80,6 +80,16 @@ function App() {
 
           <NavSearchBar />
 
+          <div style={{ width: '100%', height: '600px', position: 'relative' }}>
+            <Orb
+              hoverIntensity={0.14}
+              rotateOnHover
+              hue={206}
+              forceHoverState={false}
+              backgroundColor="#000000"
+            />
+          </div>
+
           <button
             onClick={() => setIsProfileOpen(true)}
             style={{
@@ -115,16 +125,6 @@ function App() {
           <Route path="/create" element={isLoggedIn ? <CreatePost /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
           <Route path="/posts/:id" element={<PostDetail />} />
         </Routes>
-      </div>
-
-      <div style={{ width: '100%', height: '600px', position: 'relative' }}>
-        <Orb
-          hoverIntensity={2}
-          rotateOnHover
-          hue={0}
-          forceHoverState={false}
-          backgroundColor="#000000"
-        />
       </div>
     </>
   );
