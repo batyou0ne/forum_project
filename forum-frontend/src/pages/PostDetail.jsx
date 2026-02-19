@@ -54,6 +54,7 @@ function PostDetail() {
 
     useEffect(() => {
         const user = getUserFromToken();
+        console.log("TOKEN USER:", user);
         setCurrentUser(user);
 
         const fetchPost = async () => {
