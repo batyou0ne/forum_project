@@ -6,7 +6,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
 import Profile from "./pages/Profile";
-import { Orb } from "react-bits";
+import Orb from './components/orb';
 
 function NavSearchBar() {
   const [searchInput, setSearchInput] = useState("");
@@ -117,12 +117,13 @@ function App() {
         </Routes>
       </div>
 
-      <div style={{ width: '1080px', height: '1080px', position: 'relative' }}>
+      <div style={{ width: '100%', height: '600px', position: 'relative' }}>
         <Orb
-          hue={206}
-          hoverIntensity={0.1}
-          rotateOnHover={false}
+          hoverIntensity={2}
+          rotateOnHover
+          hue={0}
           forceHoverState={false}
+          backgroundColor="#000000"
         />
       </div>
     </>
