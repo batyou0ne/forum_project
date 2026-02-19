@@ -328,7 +328,7 @@ function hexToVec3(color) {
     if (rgbMatch) {
         return new Vec3(parseInt(rgbMatch[1]) / 255, parseInt(rgbMatch[2]) / 255, parseInt(rgbMatch[3]) / 255);
     }
-
+    //github
     const hslMatch = color.match(/hsla?\((\d+),\s*(\d+)%,\s*(\d+)%/);
     if (hslMatch) {
         const h = parseInt(hslMatch[1]) / 360;
