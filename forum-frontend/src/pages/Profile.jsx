@@ -8,6 +8,10 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
     const [userPosts, setUserPosts] = useState([]);
     const [showPosts, setShowPosts] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [followers, setFollowers] = useState([]);
+    const [following, setFollowing] = useState([]);
+    const [showFollowers, setShowFollowers] = useState(false);
+    const [showFollowing, setShowFollowing] = useState(false);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -29,6 +33,14 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                     console.log("Profile data received:", data);
                     setUserInfo(data.userInfo);
                     setUserPosts(data.userPosts);
+
+                    const userId = data.userInfo.id;
+                    const [followersRes, followingRes] = await Promise.all([
+                        fetch(`${API_URL}/users/${userId}/followers`),
+                        fetch(`${API_URL}/users/${userId}/following`)
+                    ]);
+                    if (followersRes.ok) setFollowers(await followersRes.json());
+                    if (followingRes.ok) setFollowing(await followingRes.json());
                 } else {
                     const errorData = await response.json();
                     console.error("Profile fetch failed:", errorData);
@@ -118,13 +130,79 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                             <p style={{ opacity: 0.9, fontSize: "0.9rem", marginBottom: "15px" }}>{userInfo.email}</p>
 
                             <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginBottom: "20px" }}>
-                                <div style={{ textAlign: "center" }}>
+                                <div
+                                    style={{ textAlign: "center", position: "relative", cursor: "pointer" }}
+                                    onMouseEnter={() => setShowFollowers(true)}
+                                    onMouseLeave={() => setShowFollowers(false)}
+                                >
                                     <span style={{ display: "block", fontSize: "1.2rem", fontWeight: "bold", color: "#fff" }}>{userInfo.followerCount || 0}</span>
                                     <span style={{ fontSize: "0.75rem", color: "#9ca3af", textTransform: "uppercase" }}>Takipçi</span>
+                                    {showFollowers && followers.length > 0 && (
+                                        <div style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: "50%",
+                                            transform: "translateX(-50%)",
+                                            marginTop: "8px",
+                                            minWidth: "160px",
+                                            maxHeight: "200px",
+                                            overflowY: "auto",
+                                            backgroundColor: "#000",
+                                            border: "1px solid #4e525a",
+                                            borderRadius: "8px",
+                                            padding: "6px 0",
+                                            zIndex: 1100,
+                                            scrollbarWidth: "thin",
+                                            scrollbarColor: "#4e525a transparent",
+                                        }}>
+                                            {followers.map(f => (
+                                                <div key={f.id} style={{
+                                                    padding: "8px 14px",
+                                                    fontSize: "0.85rem",
+                                                    color: "#ddd",
+                                                    borderBottom: "1px solid rgba(78,82,90,0.4)",
+                                                    whiteSpace: "nowrap",
+                                                }}>@{f.username}</div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
-                                <div style={{ textAlign: "center" }}>
+                                <div
+                                    style={{ textAlign: "center", position: "relative", cursor: "pointer" }}
+                                    onMouseEnter={() => setShowFollowing(true)}
+                                    onMouseLeave={() => setShowFollowing(false)}
+                                >
                                     <span style={{ display: "block", fontSize: "1.2rem", fontWeight: "bold", color: "#fff" }}>{userInfo.followingCount || 0}</span>
                                     <span style={{ fontSize: "0.75rem", color: "#9ca3af", textTransform: "uppercase" }}>Takip</span>
+                                    {showFollowing && following.length > 0 && (
+                                        <div style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: "50%",
+                                            transform: "translateX(-50%)",
+                                            marginTop: "8px",
+                                            minWidth: "160px",
+                                            maxHeight: "200px",
+                                            overflowY: "auto",
+                                            backgroundColor: "#000",
+                                            border: "1px solid #4e525a",
+                                            borderRadius: "8px",
+                                            padding: "6px 0",
+                                            zIndex: 1100,
+                                            scrollbarWidth: "thin",
+                                            scrollbarColor: "#4e525a transparent",
+                                        }}>
+                                            {following.map(f => (
+                                                <div key={f.id} style={{
+                                                    padding: "8px 14px",
+                                                    fontSize: "0.85rem",
+                                                    color: "#ddd",
+                                                    borderBottom: "1px solid rgba(78,82,90,0.4)",
+                                                    whiteSpace: "nowrap",
+                                                }}>@{f.username}</div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -150,11 +228,14 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                                 </h3>
 
                                 <div style={{
-                                    maxHeight: showPosts ? "300px" : "0",
-                                    overflow: "hidden",
+                                    maxHeight: showPosts ? "250px" : "0",
+                                    overflowY: showPosts ? "auto" : "hidden",
+                                    overflowX: "hidden",
                                     transition: "max-height 0.3s ease-in-out",
                                     backgroundColor: "rgba(0,0,0,0.3)",
                                     borderRadius: "8px",
+                                    scrollbarWidth: "thin",
+                                    scrollbarColor: "#4e525a transparent",
                                 }}>
                                     {userPosts.length > 0 ? (
                                         userPosts.map((post) => (
