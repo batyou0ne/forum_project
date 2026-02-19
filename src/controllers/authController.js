@@ -6,8 +6,16 @@ exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    if (/\s/.test(username)) {
-      return res.status(400).json({ message: "Kullanıcı adında boşluk kullanılamaz!" });
+    if (!username || username.trim().length === 0) {
+      return res.status(400).json({ message: "Kullanıcı adı boş bırakılamaz!" });
+    }
+
+    if (/[^a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]/.test(username)) {
+      return res.status(400).json({ message: "Kullanıcı adında sadece harf, rakam ve alt çizgi kullanılabilir!" });
+    }
+
+    if (/\s/.test(password)) {
+      return res.status(400).json({ message: "Şifrede boşluk kullanılamaz!" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

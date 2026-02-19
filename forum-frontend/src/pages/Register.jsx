@@ -11,6 +11,11 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (username.trim().length === 0) {
+            alert("Kullanıcı adı boş bırakılamaz!");
+            return;
+        }
+
         try {
             const response = await fetch(`${API_URL}/auth/register`, {
                 method: "POST",
@@ -45,7 +50,7 @@ function Register() {
                     <input
                         type="text"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value.replace(/\s/g, ''))}
+                        onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]/g, ''))}
                         required
                     />
                 </div>
@@ -65,7 +70,7 @@ function Register() {
                     <input
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value.replace(/\s/g, ''))}
                         required
                     />
                 </div>

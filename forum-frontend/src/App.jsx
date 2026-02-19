@@ -6,6 +6,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import CreatePost from "./pages/createPost";
 import Profile from "./pages/Profile";
+import { Orb } from "react-bits";
 
 function NavSearchBar() {
   const [searchInput, setSearchInput] = useState("");
@@ -114,6 +115,15 @@ function App() {
           <Route path="/create" element={isLoggedIn ? <CreatePost /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
           <Route path="/posts/:id" element={<PostDetail />} />
         </Routes>
+      </div>
+
+      <div style={{ width: '1080px', height: '1080px', position: 'relative' }}>
+        <Orb
+          hue={206}
+          hoverIntensity={0.1}
+          rotateOnHover={false}
+          forceHoverState={false}
+        />
       </div>
     </>
   );
