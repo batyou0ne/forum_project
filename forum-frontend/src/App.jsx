@@ -92,7 +92,7 @@ function App() {
       )}
 
       {isLoggedIn && (
-        <nav style={{ position: 'relative', zIndex: 20 }}>
+        <nav>
           <div>
             <Link to="/">Anasayfa</Link>
             <Link to="/create">Yeni Gönderi Paylaş</Link>

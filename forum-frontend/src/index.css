@@ -94,6 +94,11 @@ button:focus-visible {
   width: 100%;
 }
 
+#root {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 .aurora-bg {
   position: fixed;
   top: 0;
