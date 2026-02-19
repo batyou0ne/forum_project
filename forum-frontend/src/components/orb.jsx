@@ -1,6 +1,6 @@
 import { Mesh, Program, Renderer, Triangle, Vec3 } from 'ogl';
 import { useEffect, useRef } from 'react';
-import './Orb.css';
+import './orb.css';
 
 export default function Orb({
     hue = 0,
