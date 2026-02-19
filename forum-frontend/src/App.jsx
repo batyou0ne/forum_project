@@ -71,8 +71,27 @@ function App() {
 
   return (
     <>
+      {/* Orb arka planı - sabit, tam ekran, en arkada */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        pointerEvents: 'none',
+      }}>
+        <Orb
+          hoverIntensity={0.14}
+          rotateOnHover={false}
+          hue={206}
+          forceHoverState={false}
+          backgroundColor="#000000"
+        />
+      </div>
+
       {isLoggedIn && (
-        <nav>
+        <nav style={{ position: 'relative', zIndex: 20 }}>
           <div>
             <Link to="/">Anasayfa</Link>
             <Link to="/create">Yeni Gönderi Paylaş</Link>
@@ -80,15 +99,6 @@ function App() {
 
           <NavSearchBar />
 
-          <div style={{ width: '100%', height: '600px', position: 'relative' }}>
-            <Orb
-              hoverIntensity={0.14}
-              rotateOnHover
-              hue={206}
-              forceHoverState={false}
-              backgroundColor="#000000"
-            />
-          </div>
 
           <button
             onClick={() => setIsProfileOpen(true)}
