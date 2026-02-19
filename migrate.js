@@ -16,10 +16,13 @@ async function migrate() {
         ALTER TABLE users
         ADD COLUMN banned_until DATETIME DEFAULT NULL
       `);
-            console.log("✅ banned_until kolonu eklendi.");
-        } else {
-            console.log("ℹ️  banned_until kolonu zaten mevcut, atlanıyor.");
         }
+
+        await db.query(
+            "UPDATE users SET role = 'admin' WHERE email = ?",
+            ["batuhankeskn0@gmail.com"]
+        );
+        console.log("✅ Admin rolü atandı.");
 
         process.exit(0);
     } catch (err) {
