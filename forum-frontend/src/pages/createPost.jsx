@@ -51,7 +51,6 @@ function createPost() {
                 </p>
             )}
 
-            {/* Form gönderilince handleSubmit çalışsın */}
             <form onSubmit={handleSubmit}>
 
                 <div style={{ marginBottom: "10px" }}>
@@ -59,7 +58,6 @@ function createPost() {
                     <input
                         type="text"
                         value={title}
-                        // Yazı değiştikçe state'i güncelle:
                         onChange={(e) => setTitle(e.target.value)}
                         required
                         style={{ width: "100%", padding: "8px" }}

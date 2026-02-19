@@ -32,20 +32,16 @@ function PostDetail() {
     const [error, setError] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
 
-    // State for likes/dislikes
     const [likeCount, setLikeCount] = useState(0);
     const [dislikeCount, setDislikeCount] = useState(0);
 
-    // State for follow
     const [isFollowing, setIsFollowing] = useState(false);
 
-    // State for comments
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
 
     const fetchComments = async () => {
         try {
-            // Correct API URL: /api/comments/:postId
             const response = await fetch(`${API_URL}/comments/${id}`);
             if (response.ok) {
                 const data = await response.json();
@@ -85,7 +81,6 @@ function PostDetail() {
                 setLikeCount(data.like_count || 0);
                 setDislikeCount(data.dislike_count || 0);
 
-                // Takip durumunu kontrol et
                 if (user && user.id !== data.user_id) {
                     try {
                         const followRes = await fetch(`${API_URL}/users/${data.user_id}/followers`);
@@ -96,7 +91,6 @@ function PostDetail() {
                     } catch (_) { }
                 }
 
-                // Fetch comments after post is loaded
                 fetchComments();
 
             } catch (err) {
@@ -139,7 +133,7 @@ function PostDetail() {
         e.preventDefault();
 
         const currentUserId = localStorage.getItem("userId");
-        const token = localStorage.getItem("token"); // Fixed: localStorage.getItem
+        const token = localStorage.getItem("token");
 
         if (!currentUserId || !token) {
             alert("Yorum yapmak için giriş yapmalısınız!");
@@ -151,7 +145,6 @@ function PostDetail() {
         }
 
         try {
-            // Correct API URL: /api/comments/:postId
             const response = await fetch(`${API_URL}/comments/${id}`, {
                 method: "POST",
                 headers: {
@@ -159,14 +152,14 @@ function PostDetail() {
                     "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    userId: currentUserId, // Backend might expect this or extract from token
+                    userId: currentUserId,
                     content: newComment
                 }),
             });
 
             if (response.ok) {
-                setNewComment(""); // Clear input
-                fetchComments(); // Refresh list
+                setNewComment("");
+                fetchComments();
             } else {
                 const errorData = await response.json();
                 alert(errorData.message || "Yorum eklenemedi.");
@@ -191,12 +184,12 @@ function PostDetail() {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ type }), // Backend expects 'type' in body
+                body: JSON.stringify({ type }),
             });
 
             if (response.ok) {
                 const result = await response.json();
-                const action = result.action; // 'added', 'removed', 'updated'
+                const action = result.action;
 
                 if (type === 'like') {
                     if (action === 'added') {
@@ -251,10 +244,6 @@ function PostDetail() {
         }
     };
 
-    // ... (imports remain)
-
-    // ...
-
     return (
         <div>
             <h2>{post.title}</h2>
@@ -292,7 +281,6 @@ function PostDetail() {
 
             <hr />
 
-            {/* Comments Section */}
             <div className="comment-section">
                 <h3>Yorumlar</h3>
 

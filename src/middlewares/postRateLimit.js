@@ -4,7 +4,6 @@ module.exports = async (req, res, next) => {
     const userId = req.user.id;
 
     try {
-        // 1. Ban kontrolü
         const [banRows] = await db.query(
             "SELECT banned_until FROM users WHERE id = ?",
             [userId]
@@ -20,7 +19,6 @@ module.exports = async (req, res, next) => {
             }
         }
 
-        // 2. Cooldown kontrolü: son 2 dakika içinde post attı mı?
         const [cooldownRows] = await db.query(
             "SELECT id FROM posts WHERE user_id = ? AND created_at > DATE_SUB(NOW(), INTERVAL 2 MINUTE) ORDER BY created_at DESC LIMIT 1",
             [userId]
@@ -32,14 +30,13 @@ module.exports = async (req, res, next) => {
             });
         }
 
-        // 3. Spam kontrolü: son 10 dakikada 4'ten fazla post
         const [spamRows] = await db.query(
             "SELECT COUNT(*) AS count FROM posts WHERE user_id = ? AND created_at > DATE_SUB(NOW(), INTERVAL 10 MINUTE)",
             [userId]
         );
 
         if (spamRows[0].count >= 4) {
-            const banUntil = new Date(Date.now() + 60 * 60 * 1000); // 1 saat
+            const banUntil = new Date(Date.now() + 60 * 60 * 1000);
             await db.query("UPDATE users SET banned_until = ? WHERE id = ?", [
                 banUntil,
                 userId,

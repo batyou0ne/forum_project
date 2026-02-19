@@ -153,10 +153,6 @@ nav a:hover {
   color: #000;
 }
 
-
-
-
-
 h2 {
   margin: 0 0 1rem;
   font-size: 1.55rem;
@@ -210,8 +206,6 @@ span {
   color: var(--text-muted);
 }
 
-
-
 .post-card h3 a {
   color: #ffffff;
 }
@@ -245,13 +239,11 @@ hr {
   margin: 1.1rem 0;
 }
 
-/* Auth Page Specific Styles */
 .auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
-  /* Adjust as needed to center vertically within the available space */
   width: 100%;
 }
 
@@ -261,20 +253,16 @@ hr {
   box-shadow: none !important;
   width: 100%;
   max-width: 400px;
-  /* Ensure it doesn't get too wide */
   padding: 0;
-  /* Remove padding if not needed, or adjust */
 }
 
 .auth-page input {
   background: transparent !important;
   border: none !important;
   border-bottom: 1px solid #4b5563 !important;
-  /* Slightly lighter than main border */
   border-radius: 0 !important;
   color: var(--text-main);
   padding: 10px 0;
-  /* Vertical padding, no horizontal padding to align with text */
   margin-bottom: 20px;
   transition: border-color 0.3s ease;
 }
@@ -306,7 +294,6 @@ hr {
   background-color: rgb(255, 65, 65);
 }
 
-/* plus sign */
 .sign {
   width: 100%;
   transition-duration: .3s;
@@ -323,7 +310,6 @@ hr {
   fill: white;
 }
 
-/* text */
 .text {
   position: absolute;
   right: 0%;
@@ -335,7 +321,6 @@ hr {
   transition-duration: .3s;
 }
 
-/* hover effect on button width */
 .Btn:hover {
   width: 125px;
   border-radius: 40px;
@@ -348,7 +333,6 @@ hr {
   padding-left: 20px;
 }
 
-/* hover effect button's text */
 .Btn:hover .text {
   opacity: 1;
   width: 70%;
@@ -356,7 +340,6 @@ hr {
   padding-right: 10px;
 }
 
-/* button click effect*/
 .Btn:active {
   transform: translate(2px, 2px);
 }

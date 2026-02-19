@@ -1,10 +1,9 @@
-const db = require("./src/config/db.js"); // Senin db bağlantı dosyanı kullanıyoruz
+const db = require("./src/config/db.js");
 
 async function createTables() {
   try {
     console.log("⏳ Veritabanına bağlanılıyor ve tablolar oluşturuluyor...");
 
-    // 1. USERS Tablosu
     await db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,7 +16,6 @@ async function createTables() {
     `);
     console.log("✅ Users tablosu hazır.");
 
-    // 2. POSTS Tablosu
     await db.query(`
       CREATE TABLE IF NOT EXISTS posts (
         id INT AUTO_INCREMENT PRIMARY KEY,

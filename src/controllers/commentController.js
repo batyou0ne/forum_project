@@ -46,10 +46,9 @@ exports.getCommentsByPost = async (req, res) => {
                 post_id: row.post_id,
                 parent_id: row.parent_id,
                 user_id: row.user_id,
-                username: row.username, // Add username
+                username: row.username,
                 content: row.content,
                 created_at: row.created_at,
-                //...row, bu yukarıdakileri tek tek yazmak yerine böyle de yazabiliyormuşuz
                 replies: []
             };
         });

@@ -1,9 +1,8 @@
 const db = require("../config/db");
 
 exports.toggleFollow = async (req, res) => {
-    const followerId = req.user.id; //biz, tokendan geliyor
-
-    const followingId = req.params.id; //takip etmek istediğimiz kişi, url'den geliyor
+    const followerId = req.user.id;
+    const followingId = req.params.id;
 
     if (followerId == followingId) {
         return res.status(400).json({ message: "Kendinizi takip edemezsiniz" })

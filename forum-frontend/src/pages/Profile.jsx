@@ -10,7 +10,7 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!isOpen) return; // Only fetch when open
+        if (!isOpen) return;
 
         const fetchProfileData = async () => {
             try {
@@ -45,7 +45,6 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
 
     return (
         <>
-            {/* Overlay - dışarı tıklayınca kapat */}
             {isOpen && (
                 <div
                     onClick={onClose}
@@ -58,7 +57,6 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                 />
             )}
 
-            {/* Sidebar */}
             <div style={{
                 position: "fixed",
                 top: "16px",
@@ -132,7 +130,6 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                         </div>
 
                         <div style={{ flex: 1, overflowY: "auto" }}>
-                            {/* Postlarım Section */}
                             <div
                                 style={{
                                     marginTop: "20px",
@@ -194,7 +191,6 @@ const Profile = ({ isOpen, onClose, onLogout }) => {
                                 </div>
                             </div>
 
-                            {/* Future: User Stats */}
                             <p style={{ textAlign: "center", fontStyle: "italic", opacity: 0.5, marginTop: "20px" }}>
                                 {userInfo.bio || "Henüz biyografi yok."}
                             </p>

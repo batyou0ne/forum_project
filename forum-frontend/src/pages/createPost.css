@@ -14,7 +14,6 @@
     z-index: 0;
 }
 
-/* Aşağıdan yükselen sarı */
 .create-post-btn::before {
     content: "";
     position: absolute;
@@ -28,7 +27,6 @@
     z-index: -1;
 }
 
-/* Yukarıdan inen sarı */
 .create-post-btn::after {
     content: "";
     position: absolute;

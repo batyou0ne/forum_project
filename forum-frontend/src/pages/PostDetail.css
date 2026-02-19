@@ -19,7 +19,6 @@
 
 .reaction-btn.like {
     color: #10b981;
-    /* Green-500 */
     border-color: #10b981;
 }
 
@@ -29,7 +28,6 @@
 
 .reaction-btn.dislike {
     color: #ef4444;
-    /* Red-500 */
     border-color: #ef4444;
 }
 
@@ -112,7 +110,6 @@
     margin-bottom: 4px;
 }
 
-/* Takip Et butonu */
 .follow-btn {
     position: relative;
     display: inline-block;
@@ -138,7 +135,6 @@
     border: 1px solid #4e525a;
 }
 
-/* Soldan gelen sarı */
 .follow-btn::before {
     content: "";
     position: absolute;
@@ -152,7 +148,6 @@
     z-index: -1;
 }
 
-/* Sağdan gelen sarı */
 .follow-btn::after {
     content: "";
     position: absolute;
