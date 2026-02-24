@@ -2,7 +2,7 @@
 
 A modern, interactive full-stack web application built with a robust MVC architecture. This platform allows users to register, create posts, interact through comments, react to content (like/dislike), and view their personalized profiles. 
 
-The application features a highly responsive, premium UI utilizing **Glassmorphism** design principles and animated backgrounds.
+The application features a highly responsive, premium UI utilizing design principles and animated backgrounds.
 
 ## ✨ Features
 
@@ -10,7 +10,6 @@ The application features a highly responsive, premium UI utilizing **Glassmorphi
 * **📝 Post Management (CRUD):** Users can seamlessly create, read, and delete their posts.
 * **💬 Interactive Comments:** Dynamic commenting system on individual posts.
 * **👍 Reaction System:** "All-in-One" like and dislike toggle functionality with real-time updates.
-* **👤 Glassmorphism User Profiles:** A sleek, slide-out profile sidebar displaying user information and activity.
 * **🎨 Premium UI/UX:** Features modern CSS techniques, custom Uiverse.io components, and an interactive `DotGrid` animated background.
 * **🛡️ Protected Routes:** Middleware implementation to secure backend API endpoints and frontend views.
 
@@ -19,7 +18,7 @@ The application features a highly responsive, premium UI utilizing **Glassmorphi
 **Frontend:**
 * React.js
 * React Router DOM
-* Modern CSS3 (Glassmorphism, Flexbox, UI animations)
+* Modern CSS3
 
 **Backend:**
 * Node.js & Express.js
@@ -37,7 +36,7 @@ The application features a highly responsive, premium UI utilizing **Glassmorphi
 │   │   ├── components/    # Reusable UI components (DotGrid, etc.)
 │   │   ├── pages/         # React Views (Login, Posts, Profile, PostDetail)
 │   │   ├── App.jsx        # Main routing & state
-│   │   └── App.css        # Global styles & Glassmorphism effects
+│   │   └── App.css        # Global styles
 │
 └── backend/
     ├── src/
