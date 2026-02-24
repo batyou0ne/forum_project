@@ -1,17 +1,11 @@
-const db = require("../config/db");
+const postService = require("../services/postService");
 
 exports.createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
     const userId = req.user.id;
 
-    const sql = `
-      INSERT INTO posts (user_id, title, content)
-      VALUES (?, ?, ?)
-    `;
-
-    const [result] = await db.query(sql, [userId, title, content]);
-
+    await postService.addPost(userId, title, content);
     res.status(201).json({ message: "Post created" });
 
   } catch (err) {
@@ -20,54 +14,14 @@ exports.createPost = async (req, res) => {
   }
 };
 
-
-
-
 exports.getAllPosts = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
-    const offset = (page - 1) * limit;
-    const search = req.query.search ? `%${req.query.search}%` : null;
+    const search = req.query.search;
 
-    let sql, countSql, params, countParams;
-
-    if (search) {
-      sql = `
-        SELECT posts.id, posts.title, posts.content, posts.created_at, users.username,
-        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
-        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
-        FROM posts
-        JOIN users ON posts.user_id = users.id
-        WHERE posts.title LIKE ? OR posts.content LIKE ?
-        ORDER BY posts.created_at DESC
-        LIMIT ? OFFSET ?;
-      `;
-      params = [search, search, limit, offset];
-      countSql = `SELECT COUNT(*) as total FROM posts WHERE title LIKE ? OR content LIKE ?`;
-      countParams = [search, search];
-    } else {
-      sql = `
-        SELECT posts.id, posts.title, posts.content, posts.created_at, users.username,
-        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
-        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
-        FROM posts
-        JOIN users ON posts.user_id = users.id
-        ORDER BY posts.created_at DESC
-        LIMIT ? OFFSET ?;
-      `;
-      params = [limit, offset];
-      countSql = `SELECT COUNT(*) as total FROM posts`;
-      countParams = [];
-    }
-
-    const [posts] = await db.query(sql, params);
-    const [countResult] = await db.query(countSql, countParams);
-
-    const totalPosts = countResult[0].total;
-    const totalPages = Math.ceil(totalPosts / limit) || 1;
-
-    return res.json({ page, totalPages, totalPosts, posts });
+    const result = await postService.getPosts(page, limit, search);
+    return res.json(result);
 
   } catch (err) {
     console.error("GET POSTS ERROR:", err);
@@ -78,25 +32,13 @@ exports.getAllPosts = async (req, res) => {
 exports.getPostById = async (req, res) => {
   try {
     const postId = req.params.id;
+    const post = await postService.fetchPostById(postId);
+    res.json(post);
 
-    const sql = `
-        SELECT posts.id,posts.user_id, posts.title, posts.content, posts.created_at, users.username,
-        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'like') AS like_count,
-        (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id AND type = 'dislike') AS dislike_count
-        FROM posts
-        JOIN users ON posts.user_id = users.id
-        WHERE posts.id = ?
-    `
-
-    const [results] = await db.query(sql, [postId]);
-
-    if (results.length === 0) {
+  } catch (err) {
+    if (err.message === "Post not found") {
       return res.status(404).json({ message: "Post not found" })
     }
-
-    res.json(results[0])
-
-  } catch (error) {
     console.error("GET POST BY ID ERROR:", err);
     res.status(500).json({ message: err.message });
   }
@@ -108,35 +50,17 @@ exports.deletePost = async (req, res) => {
     const userId = req.user.id;
     const role = req.user.role;
 
-    let sql;
-    let params;
-
-    if (role === "admin") {
-      sql = `DELETE FROM posts WHERE id = ?`;
-      params = [postId];
-    } else {
-      sql = `DELETE FROM posts WHERE id = ? AND user_id = ?`;
-      params = [postId, userId]
-    }
-
-    const [result] = await db.query(sql, params);
-
-    if (result.affectedRows === 0) {
-      return res.status(403).json({
-        message: "You are not allowed to delete this post"
-      });
-    }
-
+    await postService.removePost(postId, userId, role);
     return res.json({ message: "Post deleted successfully" });
 
   } catch (err) {
+    if (err.message === "You are not allowed to delete this post") {
+      return res.status(403).json({ message: err.message });
+    }
     console.error("DELETE POST ERROR:", err);
-    return res.status(500).json({
-      message: "Post could not be deleted"
-    });
+    return res.status(500).json({ message: "Post could not be deleted" });
   }
 };
-
 
 exports.updatePost = async (req, res) => {
   try {
@@ -144,21 +68,13 @@ exports.updatePost = async (req, res) => {
     const userId = req.user.id;
     const { title, content } = req.body;
 
-    const sql =
-      `
-      UPDATE posts
-      SET title = ?, content = ?
-      WHERE id = ? AND user_id = ?
-    `
-    const [result] = await db.query(sql, [title, content, postId, userId]);
-
-    if (result.affectedRows === 0) {
-      return res.status(403).json({ message: "You are not allowed to update this post." });
-    }
-
+    await postService.editPost(postId, userId, title, content);
     return res.json({ message: "Post is updated successfully!" });
 
   } catch (err) {
+    if (err.message === "You are not allowed to update this post.") {
+      return res.status(403).json({ message: err.message });
+    }
     return res.status(500).json({ message: "Post could not be updated." })
   }
 };

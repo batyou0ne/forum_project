@@ -1,48 +1,39 @@
-const db = require("../config/db");
+const followerService = require("../services/followerService");
 
 exports.toggleFollow = async (req, res) => {
-    const followerId = req.user.id;
-    const followingId = req.params.id;
+    try {
+        const followerId = req.user.id;
+        const followingId = req.params.id;
 
-    if (followerId == followingId) {
-        return res.status(400).json({ message: "Kendinizi takip edemezsiniz" })
-    };
-
-    const [existing] = await db.query("SELECT id FROM follows WHERE follower_id = ? AND following_id = ?", [followerId, followingId]);
-
-    if (existing.length > 0) {
-        await db.query("DELETE FROM follows WHERE follower_id = ? AND following_id = ?", [followerId, followingId]);
-        return res.json({ following: false })
-    } else {
-        await db.query("INSERT INTO follows (follower_id, following_id) VALUES (?, ?)", [followerId, followingId]);
-        return res.json({ following: true });
+        const result = await followerService.toggleFollowUser(followerId, followingId);
+        return res.json(result);
+    } catch (error) {
+        if (error.message === "Kendinizi takip edemezsiniz") {
+            return res.status(400).json({ message: error.message });
+        }
+        console.error("Takip hatası:", error);
+        return res.status(500).json({ message: "Sunucu hatası" });
     }
-
-
 };
 
 exports.getFollowers = async (req, res) => {
-    const userId = req.params.id;
-
-    const [rows] = await db.query(
-        `SELECT users.id, users.username
-         FROM follows
-         JOIN users ON follows.follower_id = users.id
-         WHERE follows.following_id = ?
-        `, [userId]);
-
-    res.json(rows);
+    try {
+        const userId = req.params.id;
+        const followers = await followerService.getFollowersList(userId);
+        return res.json(followers);
+    } catch (error) {
+        console.error("Takipçi getirme hatası:", error);
+        return res.status(500).json({ message: "Sunucu hatası" });
+    }
 };
 
 exports.getFollowing = async (req, res) => {
-    const userId = req.params.id;
-
-    const [rows] = await db.query(
-        `SELECT users.id, users.username
-         FROM follows
-         JOIN users ON follows.following_id = users.id
-         WHERE follows.follower_id = ?`,
-        [userId]
-    );
-    res.json(rows);
+    try {
+        const userId = req.params.id;
+        const following = await followerService.getFollowingList(userId);
+        return res.json(following);
+    } catch (error) {
+        console.error("Takip edilenleri getirme hatası:", error);
+        return res.status(500).json({ message: "Sunucu hatası" });
+    }
 };
